@@ -3,69 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galaxy Hub - Téléchargement de Cheats</title>
+    <title>Galaxy Hub</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Loader -->
-    <div id="loader" class="loader-container" aria-hidden="true" role="alert">
-        <div class="loader" aria-label="Chargement en cours"></div>
-    </div>
-
-    <!-- Header Section -->
+    <!-- Header -->
     <header>
         <div class="logo-container">
-            <img src="images/logo.png" alt="Logo de Galaxy Hub" class="logo">
+            <img src="images/logo.png" alt="Logo" class="logo">
             <span class="site-name">Galaxy Hub</span>
         </div>
         <div class="discord-link">
-            <a href="https://discord.gg/MuaNANFnPq" target="_blank" aria-label="Rejoignez-nous sur Discord">
-                <img src="images/discord-icon.png" alt="Icône Discord" class="discord-icon">
-            </a>
+            <a href="https://discord.gg/galaxy" target="_blank"><img src="images/discord-icon.png" alt="Discord" class="discord-icon"></a>
         </div>
     </header>
 
-    <!-- Main Content Section -->
-    <main class="content">
-        <h1 class="main-title">Téléchargez votre Cheat Préféré</h1>
-        <p class="description">Utilisez les cheats de manière sécurisée et simple, avec des outils de qualité.</p>
+    <div class="content">
+        <h1 class="main-title">Bienvenue sur Galaxy Hub</h1>
+        <p class="description">Choisissez votre cheat et cliquez sur "Télécharger" pour commencer.</p>
 
-        <!-- Download Section -->
-        <section class="download-section" aria-labelledby="download-title">
-            <h2 id="download-title" class="visually-hidden">Section des téléchargements</h2>
-
-            <!-- Dynamic cheat list (Example structure) -->
-            <div class="download-item">
+        <!-- Section des cheats -->
+        <div class="cheats-container">
+            <!-- Spoofer Section -->
+            <div class="cheat-card">
                 <h2>Spoofer</h2>
-                <p>Profitez de l'anonymat total avec notre spoofer de qualité supérieure.</p>
+                <p>Protection anti-bannissement pour vos jeux.</p>
                 <button class="download-btn" onclick="showModal('Spoofer')">Télécharger</button>
             </div>
 
-            <div class="download-item">
-                <h2>Bientôt Disponible</h2>
-                <p>Ce cheat sera bientôt disponible.</p>
-                <button class="download-btn" disabled aria-disabled="true">Indisponible</button>
+            <!-- GalaxyBoostFR Section -->
+            <div class="cheat-card">
+                <h2>GalaxyBoostFR</h2>
+                <p>Boostez vos performances avec GalaxyBoostFR.</p>
+                <button class="download-btn" onclick="showModal('GalaxyBoostFR')">Télécharger</button>
             </div>
-        </section>
-    </main>
 
-    <!-- Modal (Code Entry) -->
-    <div id="modal" class="modal" aria-hidden="true" role="dialog">
-        <div class="modal-content">
-            <h2>Entrez votre code pour <span id="cheat-name"></span></h2>
-            <input type="text" id="codeInput" placeholder="Entrez le code ici..." aria-label="Code de téléchargement" required>
-            <div class="modal-buttons">
-                <button class="confirm-btn" onclick="verifyCode()">Confirmer</button>
-                <button class="close-btn" onclick="closeModal()">Annuler</button>
+            <!-- Mod Menu Section -->
+            <div class="cheat-card">
+                <h2>Mod Menu BETA</h2>
+                <p>Accédez à un menu de modding avancé.</p>
+                <button class="download-btn" onclick="showModal('ModMenuFiveMBETA')">Télécharger</button>
             </div>
-            <p id="error-message" role="alert"></p>
+
+            <!-- SpeedHack Section -->
+            <div class="cheat-card">
+                <h2>SpeedHack</h2>
+                <p>Accélérez votre jeu avec ce cheat exclusif.</p>
+                <button class="download-btn" onclick="showModal('SpeedHack')">Télécharger</button>
+            </div>
+
+            <!-- Futur Cheat (Indisponible) -->
+            <div class="cheat-card">
+                <h2>Futur Cheat</h2>
+                <p>Prochainement disponible.</p>
+                <button class="download-btn unavailable" disabled>Indisponible</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal pour entrer le code -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <h2 id="cheat-name"></h2>
+            <input type="text" id="codeInput" placeholder="Entrez votre code" />
+            <button onclick="verifyCode()">Vérifier</button>
+            <p id="error-message"></p>
         </div>
     </div>
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2024 Galaxy Hub - Tous droits réservés.</p>
+        <p>&copy; 2024 Galaxy Hub. Tous droits réservés.</p>
     </footer>
 
     <script src="script.js"></script>
