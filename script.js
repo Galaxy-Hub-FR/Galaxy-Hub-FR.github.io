@@ -38,8 +38,13 @@ function verifyCode() {
     // Vérifier si le code est valide
     if (validCodes[cheat] === enteredCode) {
         errorMessage.textContent = "";
-        // Afficher le bouton de téléchargement direct
-        document.getElementById(`${cheat}-download`).style.display = 'inline-block';
+
+        // Lancer les confettis
+        launchConfetti();
+
+        // Commencer le téléchargement après les confettis
+        startDownload(cheat);
+        
         closeModal();
     } else {
         errorMessage.textContent = "Code incorrect. Veuillez essayer à nouveau.";
@@ -60,8 +65,8 @@ document.querySelector('.modal').addEventListener('click', (event) => {
     }
 });
 
-// Télécharger directement le cheat
-function directDownload(cheat) {
+// Fonction pour démarrer le téléchargement
+function startDownload(cheat) {
     // Lancer l'effet des confettis
     launchConfetti();
     
