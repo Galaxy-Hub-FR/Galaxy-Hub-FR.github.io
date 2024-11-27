@@ -38,11 +38,8 @@ function verifyCode() {
     // Vérifier si le code est valide
     if (validCodes[cheat] === enteredCode) {
         errorMessage.textContent = "";
-        alert("Code valide. Téléchargement en cours...");
-
         // Afficher le bouton de téléchargement direct
         document.getElementById(`${cheat}-download`).style.display = 'inline-block';
-        
         closeModal();
     } else {
         errorMessage.textContent = "Code incorrect. Veuillez essayer à nouveau.";
@@ -65,36 +62,68 @@ document.querySelector('.modal').addEventListener('click', (event) => {
 
 // Télécharger directement le cheat
 function directDownload(cheat) {
-    alert(`${cheat} - Téléchargement direct démarré !`);
+    // Lancer l'effet des confettis
+    launchConfetti();
+    
+    // Télécharger directement sans message
     window.location.href = `downloads/${cheat}.rar`; // Modifier le chemin du fichier à télécharger
 }
 
-// Fonction pour créer une étoile
-function createStar() {
-    // Créer un élément div pour l'étoile
-    const star = document.createElement('div');
-    star.classList.add('star');
-
-    // Taille aléatoire entre 2px et 5px
-    const size = Math.random() * 3 + 2; // Taille entre 2px et 5px
-    star.style.width = `${size}px`;
-    star.style.height = `${size}px`;
-
-    // Position aléatoire
-    const xPosition = Math.random() * window.innerWidth;
-    const yPosition = Math.random() * window.innerHeight;
-
-    star.style.left = `${xPosition}px`;
-    star.style.top = `${yPosition}px`;
-
-    // Ajouter l'étoile au body
-    document.body.appendChild(star);
-
-    // Supprimer l'étoile après un certain temps pour éviter l'accumulation
-    setTimeout(() => {
-        star.remove();
-    }, 5000); // L'étoile disparaît après 5 secondes
+// Fonction pour créer des confettis
+function launchConfetti() {
+    const confettiCount = 100;
+    for (let i = 0; i < confettiCount; i++) {
+        createConfetti();
+    }
 }
 
-// Créer des étoiles toutes les 300 ms
+// Fonction pour créer un confetti
+function createConfetti() {
+    const confetti = document.createElement('div');
+    confetti.classList.add('confetti');
+    
+    // Positionnement et animation aléatoires
+    const xPos = Math.random() * window.innerWidth;
+    const yPos = Math.random() * window.innerHeight;
+
+    confetti.style.left = `${xPos}px`;
+    confetti.style.top = `${yPos}px`;
+
+    // Taille aléatoire des confettis
+    const size = Math.random() * 10 + 5; // Taille entre 5px et 15px
+    confetti.style.width = `${size}px`;
+    confetti.style.height = `${size}px`;
+
+    // Couleurs aléatoires
+    const colors = ['#ff6347', '#ffa500', '#32cd32', '#1e90ff', '#800080'];
+    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+    confetti.style.backgroundColor = randomColor;
+
+    // Ajouter le confetti à la page
+    document.body.appendChild(confetti);
+
+    // Supprimer le confetti après 3 secondes
+    setTimeout(() => {
+        confetti.remove();
+    }, 3000);
+}
+
+// Créer des étoiles aléatoires (pour l'effet visuel de fond)
+function createStar() {
+    const star = document.createElement('div');
+    star.classList.add('star');
+    const size = Math.random() * 3 + 2;
+    star.style.width = `${size}px`;
+    star.style.height = `${size}px`;
+    const xPosition = Math.random() * window.innerWidth;
+    const yPosition = Math.random() * window.innerHeight;
+    star.style.left = `${xPosition}px`;
+    star.style.top = `${yPosition}px`;
+    document.body.appendChild(star);
+    setTimeout(() => {
+        star.remove();
+    }, 5000);
+}
+
+// Créer des étoiles toutes les 300ms
 setInterval(createStar, 300);
