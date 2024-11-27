@@ -35,17 +35,36 @@
         <section class="download-section" aria-labelledby="download-title">
             <h2 id="download-title" class="visually-hidden">Section des téléchargements</h2>
 
-            <!-- Dynamic cheat list (Example structure) -->
+            <!-- Spoofer -->
             <div class="download-item">
                 <h2>Spoofer</h2>
                 <p>Profitez de l'anonymat total avec notre spoofer de qualité supérieure.</p>
-                <button class="download-btn" onclick="showModal('Spoofer', 'codeSpoofer123')">Télécharger</button>
+                <button class="download-btn" onclick="showModal('Spoofer')">Télécharger</button>
+                <button class="direct-download-btn" id="Spoofer-download" style="display:none" onclick="directDownload('Spoofer')">Téléchargement direct</button>
             </div>
 
+            <!-- GalaxyBoostFR -->
+            <div class="download-item">
+                <h2>GalaxyBoostFR</h2>
+                <p>Optimisez votre système et boostez vos performances en jeu.</p>
+                <button class="download-btn" onclick="showModal('GalaxyBoostFR')">Télécharger</button>
+                <button class="direct-download-btn" id="GalaxyBoostFR-download" style="display:none" onclick="directDownload('GalaxyBoostFR')">Téléchargement direct</button>
+            </div>
+
+            <!-- Mod Menu FiveM BETA -->
+            <div class="download-item">
+                <h2>Mod Menu FiveM BETA</h2>
+                <p>Mod Menu FiveM BETA.</p>
+                <button class="download-btn" onclick="showModal('ModMenuFiveMBETA')">Télécharger</button>
+                <button class="direct-download-btn" id="ModMenuFiveMBETA-download" style="display:none" onclick="directDownload('ModMenuFiveMBETA')">Téléchargement direct</button>
+            </div>
+
+            <!-- SpeedHack -->
             <div class="download-item">
                 <h2>Bientôt Disponible</h2>
-                <p>Ce cheat sera bientôt disponible.</p>
-                <button class="download-btn" disabled aria-disabled="true">Indisponible</button>
+                <p>Bientôt Disponible</p>
+                <button class="download-btn" onclick="showModal('SpeedHack')">Télécharger</button>
+                <button class="direct-download-btn" id="SpeedHack-download" style="display:none" onclick="directDownload('SpeedHack')">Téléchargement direct</button>
             </div>
         </section>
     </main>
