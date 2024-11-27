@@ -44,7 +44,7 @@ function verifyCode() {
 
         // Commencer le téléchargement après les confettis
         startDownload(cheat);
-        
+
         closeModal();
     } else {
         errorMessage.textContent = "Code incorrect. Veuillez essayer à nouveau.";
@@ -69,14 +69,14 @@ document.querySelector('.modal').addEventListener('click', (event) => {
 function startDownload(cheat) {
     // Lancer l'effet des confettis
     launchConfetti();
-    
+
     // Télécharger directement sans message
     window.location.href = `downloads/${cheat}.rar`; // Modifier le chemin du fichier à télécharger
 }
 
 // Fonction pour créer des confettis
 function launchConfetti() {
-    const confettiCount = 100;
+    const confettiCount = 100; // Nombre de confettis
     for (let i = 0; i < confettiCount; i++) {
         createConfetti();
     }
@@ -86,8 +86,8 @@ function launchConfetti() {
 function createConfetti() {
     const confetti = document.createElement('div');
     confetti.classList.add('confetti');
-    
-    // Positionnement et animation aléatoires
+
+    // Positionnement aléatoire
     const xPos = Math.random() * window.innerWidth;
     const yPos = Math.random() * window.innerHeight;
 
