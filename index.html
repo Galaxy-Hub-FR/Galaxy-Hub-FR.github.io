@@ -9,95 +9,57 @@
 </head>
 <body>
     <!-- Loader -->
-    <div id="loader" class="loader-container">
-        <div class="loader"></div>
+    <div id="loader" class="loader-container" aria-hidden="true" role="alert">
+        <div class="loader" aria-label="Chargement en cours"></div>
     </div>
 
     <!-- Header Section -->
     <header>
         <div class="logo-container">
-            <img src="images/logo.png" alt="Logo Galaxy Hub" class="logo">
+            <img src="images/logo.png" alt="Logo de Galaxy Hub" class="logo">
             <span class="site-name">Galaxy Hub</span>
         </div>
         <div class="discord-link">
-            <a href="https://discord.gg/MuaNANFnPq" target="_blank">
-                <img src="images/discord-icon.png" alt="Discord" class="discord-icon">
+            <a href="https://discord.gg/MuaNANFnPq" target="_blank" aria-label="Rejoignez-nous sur Discord">
+                <img src="images/discord-icon.png" alt="Icône Discord" class="discord-icon">
             </a>
         </div>
     </header>
 
     <!-- Main Content Section -->
-    <div class="content">
+    <main class="content">
         <h1 class="main-title">Téléchargez votre Cheat Préféré</h1>
         <p class="description">Utilisez les cheats de manière sécurisée et simple, avec des outils de qualité.</p>
 
         <!-- Download Section -->
-        <div class="download-section">
-            <!-- Spoofer -->
+        <section class="download-section" aria-labelledby="download-title">
+            <h2 id="download-title" class="visually-hidden">Section des téléchargements</h2>
+
+            <!-- Dynamic cheat list (Example structure) -->
             <div class="download-item">
                 <h2>Spoofer</h2>
                 <p>Profitez de l'anonymat total avec notre spoofer de qualité supérieure.</p>
                 <button class="download-btn" onclick="showModal('Spoofer', 'codeSpoofer123')">Télécharger</button>
             </div>
 
-            <!-- GalaxyBoostFR -->
             <div class="download-item">
-                <h2>GalaxyBoostFR</h2>
-                <p>Optimisez votre système et boostez vos performances en jeu.</p>
-                <button class="download-btn" onclick="showModal('GalaxyBoostFR', 'codeGalaxyBoostFR456')">Télécharger</button>
+                <h2>Bientôt Disponible</h2>
+                <p>Ce cheat sera bientôt disponible.</p>
+                <button class="download-btn" disabled aria-disabled="true">Indisponible</button>
             </div>
-
-            <!-- Mod Menu FiveM BETA -->
-            <div class="download-item">
-                <h2>Mod Menu FiveM BETA</h2>
-                <p>Mod Menu FiveM BETA.</p>
-                <button class="download-btn" onclick="showModal('AimBotUltra', 'codeBientot Disponible789')">Télécharger</button>
-            </div>
-
-            <!-- SpeedHack -->
-            <div class="download-item">
-                <h2>Bientot Disponible</h2>
-                <p>Bientot Disponible.</p>
-                <button class="download-btn" onclick="showModal('SpeedHack', 'codeBientot Disponible012')">Télécharger</button>
-            </div>
-
-            <!-- Bientot Disponible -->
-            <div class="download-item">
-                <h2>Bientot Disponible</h2>
-                <p>Bientot Disponible.</p>
-                <button class="download-btn" onclick="showModal('WallHack', 'codeBientot Disponible345')">Télécharger</button>
-            </div>
-
-            <!-- NoRecoil -->
-            <div class="download-item">
-                <h2>Bientot Disponible</h2>
-                <p>Bientot Disponible</p>
-                <button class="download-btn" onclick="showModal('NoRecoil', 'codeNoRecoil901')">Télécharger</button>
-            </div>
-
-            <!-- Unlimited Ammo -->
-            <div class="download-item">
-                <h2>Bientot Disponible</h2>
-                <p>Bientot Disponibles.</p>
-                <button class="download-btn" onclick="showModal('UnlimitedAmmo', 'codeUnlimitedAmmo234')">Télécharger</button>
-            </div>
-
-            <!-- Cheat Invisible -->
-            <div class="download-item">
-                <h2>Disponible dans 5 jour/</h2>
-                <p>Bientot Disponible.</p>
-                <button class="download-btn" onclick="showModal('CheatInvisible', 'codeCheatInvisible678')">Télécharger</button>
-            </div>
-        </div>
-    </div>
+        </section>
+    </main>
 
     <!-- Modal (Code Entry) -->
-    <div id="modal" class="modal">
+    <div id="modal" class="modal" aria-hidden="true" role="dialog">
         <div class="modal-content">
             <h2>Entrez votre code pour <span id="cheat-name"></span></h2>
-            <input type="text" id="codeInput" placeholder="Entrez le code ici..." required>
-            <button class="confirm-btn" onclick="verifyCode()">Confirmer</button>
-            <p id="error-message"></p>
+            <input type="text" id="codeInput" placeholder="Entrez le code ici..." aria-label="Code de téléchargement" required>
+            <div class="modal-buttons">
+                <button class="confirm-btn" onclick="verifyCode()">Confirmer</button>
+                <button class="close-btn" onclick="closeModal()">Annuler</button>
+            </div>
+            <p id="error-message" role="alert"></p>
         </div>
     </div>
 
