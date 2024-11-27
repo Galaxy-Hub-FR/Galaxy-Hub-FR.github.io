@@ -69,32 +69,32 @@ function directDownload(cheat) {
     window.location.href = `downloads/${cheat}.rar`; // Modifier le chemin du fichier à télécharger
 }
 
-// Fonction pour créer des étoiles aléatoires
-function createStars() {
-    const body = document.querySelector('body');
-    const numStars = 100; // Nombre d'étoiles à générer
-    
-    for (let i = 0; i < numStars; i++) {
-        const star = document.createElement('div');
-        star.classList.add('star');
-        
-        // Position aléatoire
-        const xPos = Math.random() * window.innerWidth;  // Position horizontale
-        const yPos = Math.random() * window.innerHeight; // Position verticale
-        const size = Math.random() * 3 + 1;  // Taille des étoiles entre 1px et 3px
-        const delay = Math.random() * 2 + 's';  // Délai d'animation aléatoire
+// Fonction pour créer une étoile
+function createStar() {
+    // Créer un élément div pour l'étoile
+    const star = document.createElement('div');
+    star.classList.add('star');
 
-        // Application des styles CSS pour l'étoile
-        star.style.left = `${xPos}px`;
-        star.style.top = `${yPos}px`;
-        star.style.width = `${size}px`;
-        star.style.height = `${size}px`;
-        star.style.animationDelay = delay;
-        
-        // Ajouter l'étoile au body
-        body.appendChild(star);
-    }
+    // Taille aléatoire entre 2px et 5px
+    const size = Math.random() * 3 + 2; // Taille entre 2px et 5px
+    star.style.width = `${size}px`;
+    star.style.height = `${size}px`;
+
+    // Position aléatoire
+    const xPosition = Math.random() * window.innerWidth;
+    const yPosition = Math.random() * window.innerHeight;
+
+    star.style.left = `${xPosition}px`;
+    star.style.top = `${yPosition}px`;
+
+    // Ajouter l'étoile au body
+    document.body.appendChild(star);
+
+    // Supprimer l'étoile après un certain temps pour éviter l'accumulation
+    setTimeout(() => {
+        star.remove();
+    }, 5000); // L'étoile disparaît après 5 secondes
 }
 
-// Appeler la fonction pour générer les étoiles à l'ouverture de la page
-window.onload = createStars;
+// Créer des étoiles toutes les 300 ms
+setInterval(createStar, 300);
