@@ -1,15 +1,22 @@
-// Désactivation des outils de développement
+// Lien vers la vidéo Rickroll
+const rickrollURL = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+
+// Désactivation des outils de développement et rediriger vers Rickroll
 document.addEventListener('keydown', (event) => {
-    if (event.key === 'F12' || (event.ctrlKey && event.shiftKey && (event.key === 'I' || event.key === 'C' || event.key === 'J')) || (event.ctrlKey && event.key === 'U')) {
+    if (
+        event.key === 'F12' || 
+        (event.ctrlKey && event.shiftKey && ['I', 'C', 'J'].includes(event.key)) || 
+        (event.ctrlKey && event.key === 'U')
+    ) {
         event.preventDefault();
-        alert("L'utilisation des outils de développement est désactivée !");
+        window.location.href = rickrollURL; // Rediriger vers Rickroll
     }
 });
 
-// Désactiver clic droit
+// Désactiver le clic droit et rediriger vers Rickroll
 document.addEventListener('contextmenu', (event) => {
     event.preventDefault();
-    alert("Le clic droit est désactivé !");
+    window.location.href = rickrollURL; // Rediriger vers Rickroll
 });
 
 // Codes valides pour chaque cheat
@@ -24,38 +31,40 @@ const validCodes = {
     MoneyHack: "MONEY-HACK-GALAXY-778899"
 };
 
+// Affichage de la modale pour entrer le code
 function showModal(cheat) {
-    // Afficher le modal pour entrer le code
     const modal = document.getElementById('modal');
     document.getElementById('cheat-name').textContent = cheat;
-    modal.setAttribute('data-cheat', cheat); // Stocker le nom du cheat en cours
+    modal.setAttribute('data-cheat', cheat); // Stocker le cheat sélectionné
     modal.classList.add('show');
 }
 
+// Vérification du code de triche
 function verifyCode() {
     const modal = document.getElementById('modal');
     const cheat = modal.getAttribute('data-cheat'); // Récupérer le cheat en cours
     const enteredCode = document.getElementById('codeInput').value;
     const errorMessage = document.getElementById('error-message');
 
-    // Vérifier le code pour ce cheat spécifique
+    // Vérifier si le code est valide pour ce cheat
     if (validCodes[cheat] === enteredCode) {
         errorMessage.textContent = "";
         alert("Code valide. Téléchargement en cours...");
-        window.location.href = `downloads/${cheat}.rar`; // Télécharge le fichier spécifique
+        window.location.href = `downloads/${cheat}.rar`; // Téléchargement du fichier
         closeModal();
     } else {
         errorMessage.textContent = "Code incorrect. Veuillez essayer à nouveau.";
     }
 }
 
+// Fermer la modale
 function closeModal() {
     const modal = document.getElementById('modal');
     modal.classList.remove('show');
-    document.getElementById('codeInput').value = ""; // Réinitialiser le champ code
+    document.getElementById('codeInput').value = ""; // Réinitialiser le champ de saisie
 }
 
-// Empêcher la fermeture du modal si l'utilisateur clique en dehors du contenu
+// Empêcher la fermeture de la modale si l'utilisateur clique en dehors du contenu
 document.querySelector('.modal').addEventListener('click', (event) => {
     if (event.target === document.querySelector('.modal')) {
         closeModal();
