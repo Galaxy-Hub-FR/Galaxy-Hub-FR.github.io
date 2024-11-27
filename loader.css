@@ -1,27 +1,80 @@
-/* Loader Styles */
+/* Variables CSS */
+:root {
+    --loader-bg: rgba(0, 0, 0, 0.8);
+    --loader-border-color: #f3f3f3;
+    --loader-accent-color: #3498db;
+    --loader-size: 50px;
+    --loader-border-width: 8px;
+    --loader-spin-duration: 2s;
+}
+
+/* Container du loader */
 .loader-container {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.8); /* Fond sombre pour masquer le contenu */
+    background-color: var(--loader-bg); /* Fond sombre */
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 9999; /* Assurez-vous que le loader est au-dessus du contenu */
+    z-index: 9999; /* Le loader reste au-dessus de tout */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
+/* Afficher le loader avec une classe active */
+.loader-container.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Style du loader */
 .loader {
-    border: 8px solid #f3f3f3;
-    border-top: 8px solid #3498db;
+    border: var(--loader-border-width) solid var(--loader-border-color);
+    border-top: var(--loader-border-width) solid var(--loader-accent-color);
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 2s linear infinite;
+    width: var(--loader-size);
+    height: var(--loader-size);
+    animation: spin var(--loader-spin-duration) linear infinite;
 }
 
+/* Animation de rotation */
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Amélioration visuelle : ajout d'un effet de "pouls" */
+.loader-container .loader::after {
+    content: '';
+    position: absolute;
+    width: calc(var(--loader-size) * 1.5);
+    height: calc(var(--loader-size) * 1.5);
+    border: 2px solid var(--loader-accent-color);
+    border-radius: 50%;
+    animation: pulse 1.5s ease infinite;
+    opacity: 0.5;
+}
+
+/* Animation pouls */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 0.2;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
 }
