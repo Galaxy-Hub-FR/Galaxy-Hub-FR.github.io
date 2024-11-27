@@ -1,6 +1,6 @@
-// Désactivation des outils de développement
+// Désactiver les outils de développement
 document.addEventListener('keydown', (event) => {
-    if (event.key === 'F12' || (event.ctrlKey && event.shiftKey && (event.key === 'I' || event.key === 'C' || event.key === 'J')) || (event.ctrlKey && event.key === 'U')) {
+    if (event.key === 'F12' || (event.ctrlKey && event.shiftKey && ['I', 'C', 'J'].includes(event.key)) || (event.ctrlKey && event.key === 'U')) {
         event.preventDefault();
         alert("L'utilisation des outils de développement est désactivée !");
     }
@@ -12,18 +12,47 @@ document.addEventListener('contextmenu', (event) => {
     alert("Le clic droit est désactivé !");
 });
 
-// Codes valides pour chaque cheat et leurs utilisations restantes
+// Codes valides pour chaque cheat
 const validCodes = {
-    Spoofer: { key: "458554456585565656863846246425242742747240732470247204721472215525HBBDBVHGZBBVGH-GALAXY-HUB", uses: 3 },
-    GalaxyBoostFR: { key: "863846246425242742747240732470247204721472215525HBB863846246425242742747240732470247204721472215525HBB", uses: 5 },
-    ModMenuFiveMBETA: { key: "Fivem-OP-GALAXY-654321", uses: 2 },
-    SpeedHack: { key: "SPEED-FAST-GALAXY-098765", uses: 1 },
+    Spoofer: "458554456585565656863846246425242742747240732470247204721472215525HBBDBVHGZBBVGH-GALAXY-HUB",
+    GalaxyBoostFR: "863846246425242742747240732470247204721472215525HBB863846246425242742747240732470247204721472215525HBB",
+    ModMenuFiveMBETA: "Fivem-OP-GALAXY-654321",
+    SpeedHack: "SPEED-FAST-GALAXY-098765",
 };
+
+// Vérification si un cheat a déjà été validé
+function checkSavedState() {
+    for (let cheat in validCodes) {
+        if (localStorage.getItem(cheat) === "unlocked") {
+            markAsCompleted(cheat);
+        }
+    }
+}
+
+// Sauvegarder l'état d'un cheat
+function saveState(cheat) {
+    localStorage.setItem(cheat, "unlocked");
+}
+
+// Marquer un cheat comme terminé
+function markAsCompleted(cheat) {
+    const button = document.querySelector(`button[onclick="showModal('${cheat}')"]`);
+    if (button) {
+        button.textContent = "Déjà téléchargé";
+        button.disabled = true;
+        button.classList.add('completed');
+    }
+}
 
 // Afficher le modal pour entrer le code
 function showModal(cheat) {
+    if (localStorage.getItem(cheat) === "unlocked") {
+        alert("Ce cheat a déjà été débloqué !");
+        return;
+    }
+
     const modal = document.getElementById('modal');
-    document.getElementById('cheat-name').textContent = `${cheat} (${validCodes[cheat].uses} utilisations restantes)`;
+    document.getElementById('cheat-name').textContent = cheat;
     modal.setAttribute('data-cheat', cheat); // Stocker le nom du cheat en cours
     modal.classList.add('show');
 }
@@ -35,20 +64,21 @@ function verifyCode() {
     const enteredCode = document.getElementById('codeInput').value;
     const errorMessage = document.getElementById('error-message');
 
-    // Vérifier si le code est valide et si des utilisations restent
-    if (validCodes[cheat].key === enteredCode && validCodes[cheat].uses > 0) {
+    // Vérifier si le code est valide
+    if (validCodes[cheat] === enteredCode) {
         errorMessage.textContent = "";
 
-        // Réduire le nombre d'utilisations
-        validCodes[cheat].uses -= 1;
-
-        // Lancer les confettis et démarrer le téléchargement
+        // Lancer les confettis
         launchConfetti();
+
+        // Sauvegarder l'état
+        saveState(cheat);
+
+        // Marquer comme terminé et lancer le téléchargement
+        markAsCompleted(cheat);
         startDownload(cheat);
 
         closeModal();
-    } else if (validCodes[cheat].uses === 0) {
-        errorMessage.textContent = "Plus d'utilisations disponibles pour ce code.";
     } else {
         errorMessage.textContent = "Code incorrect. Veuillez essayer à nouveau.";
     }
@@ -70,81 +100,22 @@ document.querySelector('.modal').addEventListener('click', (event) => {
 
 // Fonction pour démarrer le téléchargement
 function startDownload(cheat) {
-    const downloadButton = document.getElementById('download-btn');
-
-    // Regrouper tous les cheats valides restants dans un bouton unique
-    downloadButton.innerHTML = "";
-    for (let key in validCodes) {
-        if (validCodes[key].uses > 0) {
-            const button = document.createElement('button');
-            button.textContent = `${key} (${validCodes[key].uses} utilisations restantes)`;
-            button.onclick = () => {
-                window.location.href = `downloads/${key}.rar`;
-            };
-            downloadButton.appendChild(button);
-        }
-    }
+    window.location.href = `downloads/${cheat}.rar`; // Modifier le chemin du fichier à télécharger
 }
 
 // Fonction pour créer des confettis avec un effet plus fluide
 function launchConfetti() {
-    const confettiCount = 100; // Nombre de confettis
+    const confettiCount = 100;
     for (let i = 0; i < confettiCount; i++) {
         createConfetti();
     }
 }
 
-// Fonction pour créer un confetti plus fluide et beau
-function createConfetti() {
-    const confetti = document.createElement('div');
-    confetti.classList.add('confetti');
+// Appeler la fonction pour vérifier l'état au chargement
+window.addEventListener('load', function () {
+    checkSavedState();
 
-    // Positionnement initial aléatoire
-    const xPos = Math.random() * window.innerWidth;
-    const yPos = Math.random() * -100; // Commence au-dessus de l'écran pour donner l'effet de chute
-
-    confetti.style.left = `${xPos}px`;
-    confetti.style.top = `${yPos}px`;
-
-    // Taille aléatoire des confettis
-    const size = Math.random() * 10 + 10; // Taille entre 10px et 20px
-    confetti.style.width = `${size}px`;
-    confetti.style.height = `${size}px`;
-
-    // Couleurs douces et variées
-    const colors = ['#ff69b4', '#ff6347', '#32cd32', '#1e90ff', '#ffd700', '#ff1493'];
-    const randomColor = colors[Math.floor(Math.random() * colors.length)];
-    confetti.style.backgroundColor = randomColor;
-
-    // Ajouter le confetti à la page
-    document.body.appendChild(confetti);
-
-    // Animation des confettis
-    confetti.style.animation = `fall ${Math.random() * 2 + 3}s ease-in-out infinite, rotate ${Math.random() * 2 + 4}s linear infinite`;
-
-    // Supprimer le confetti après l'animation
-    setTimeout(() => {
-        confetti.remove();
-    }, 5000);
-}
-
-// Animation CSS des confettis
-const styleSheet = document.createElement("style");
-styleSheet.type = "text/css";
-styleSheet.innerText = `
-@keyframes fall {
-    0% { transform: translateY(0) rotate(0deg); }
-    100% { transform: translateY(800px) rotate(360deg); }
-}
-@keyframes rotate {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-`;
-document.head.appendChild(styleSheet);
-
-// Masquer le loader une fois que la page est complètement chargée
-window.addEventListener('load', function() {
+    // Masquer le loader une fois la page chargée
     const loader = document.getElementById('loader');
-    loader.style.display = 'none';  // Cacher le loader
+    loader.style.display = 'none';
 });
