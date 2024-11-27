@@ -12,18 +12,18 @@ document.addEventListener('contextmenu', (event) => {
     alert("Le clic droit est désactivé !");
 });
 
-// Codes valides pour chaque cheat
+// Codes valides pour chaque cheat et leurs utilisations restantes
 const validCodes = {
-    Spoofer: "458554456585565656863846246425242742747240732470247204721472215525HBBDBVHGZBBVGH-GALAXY-HUB",
-    GalaxyBoostFR: "863846246425242742747240732470247204721472215525HBB863846246425242742747240732470247204721472215525HBB",
-    ModMenuFiveMBETA: "Fivem-OP-GALAXY-654321",
-    SpeedHack: "SPEED-FAST-GALAXY-098765",
+    Spoofer: { key: "458554456585565656863846246425242742747240732470247204721472215525HBBDBVHGZBBVGH-GALAXY-HUB", uses: 3 },
+    GalaxyBoostFR: { key: "863846246425242742747240732470247204721472215525HBB863846246425242742747240732470247204721472215525HBB", uses: 5 },
+    ModMenuFiveMBETA: { key: "Fivem-OP-GALAXY-654321", uses: 2 },
+    SpeedHack: { key: "SPEED-FAST-GALAXY-098765", uses: 1 },
 };
 
 // Afficher le modal pour entrer le code
 function showModal(cheat) {
     const modal = document.getElementById('modal');
-    document.getElementById('cheat-name').textContent = cheat;
+    document.getElementById('cheat-name').textContent = `${cheat} (${validCodes[cheat].uses} utilisations restantes)`;
     modal.setAttribute('data-cheat', cheat); // Stocker le nom du cheat en cours
     modal.classList.add('show');
 }
@@ -35,17 +35,20 @@ function verifyCode() {
     const enteredCode = document.getElementById('codeInput').value;
     const errorMessage = document.getElementById('error-message');
 
-    // Vérifier si le code est valide
-    if (validCodes[cheat] === enteredCode) {
+    // Vérifier si le code est valide et si des utilisations restent
+    if (validCodes[cheat].key === enteredCode && validCodes[cheat].uses > 0) {
         errorMessage.textContent = "";
 
-        // Lancer les confettis
-        launchConfetti();
+        // Réduire le nombre d'utilisations
+        validCodes[cheat].uses -= 1;
 
-        // Commencer le téléchargement après les confettis
+        // Lancer les confettis et démarrer le téléchargement
+        launchConfetti();
         startDownload(cheat);
 
         closeModal();
+    } else if (validCodes[cheat].uses === 0) {
+        errorMessage.textContent = "Plus d'utilisations disponibles pour ce code.";
     } else {
         errorMessage.textContent = "Code incorrect. Veuillez essayer à nouveau.";
     }
@@ -67,11 +70,20 @@ document.querySelector('.modal').addEventListener('click', (event) => {
 
 // Fonction pour démarrer le téléchargement
 function startDownload(cheat) {
-    // Lancer l'effet des confettis
-    launchConfetti();
+    const downloadButton = document.getElementById('download-btn');
 
-    // Télécharger directement sans message
-    window.location.href = `downloads/${cheat}.rar`; // Modifier le chemin du fichier à télécharger
+    // Regrouper tous les cheats valides restants dans un bouton unique
+    downloadButton.innerHTML = "";
+    for (let key in validCodes) {
+        if (validCodes[key].uses > 0) {
+            const button = document.createElement('button');
+            button.textContent = `${key} (${validCodes[key].uses} utilisations restantes)`;
+            button.onclick = () => {
+                window.location.href = `downloads/${key}.rar`;
+            };
+            downloadButton.appendChild(button);
+        }
+    }
 }
 
 // Fonction pour créer des confettis avec un effet plus fluide
@@ -116,52 +128,20 @@ function createConfetti() {
     }, 5000);
 }
 
-// Ajouter l'animation pour la chute des confettis
+// Animation CSS des confettis
 const styleSheet = document.createElement("style");
 styleSheet.type = "text/css";
 styleSheet.innerText = `
 @keyframes fall {
-    0% {
-        transform: translateY(0) rotate(0deg);
-    }
-    50% {
-        transform: translateY(400px) rotate(180deg);
-    }
-    100% {
-        transform: translateY(800px) rotate(360deg);
-    }
+    0% { transform: translateY(0) rotate(0deg); }
+    100% { transform: translateY(800px) rotate(360deg); }
 }
-
 @keyframes rotate {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 `;
 document.head.appendChild(styleSheet);
-
-// Créer des étoiles aléatoires (pour l'effet visuel de fond)
-function createStar() {
-    const star = document.createElement('div');
-    star.classList.add('star');
-    const size = Math.random() * 3 + 2;
-    star.style.width = `${size}px`;
-    star.style.height = `${size}px`;
-    const xPosition = Math.random() * window.innerWidth;
-    const yPosition = Math.random() * window.innerHeight;
-    star.style.left = `${xPosition}px`;
-    star.style.top = `${yPosition}px`;
-    document.body.appendChild(star);
-    setTimeout(() => {
-        star.remove();
-    }, 5000);
-}
-
-// Créer des étoiles toutes les 300ms
-setInterval(createStar, 300);
 
 // Masquer le loader une fois que la page est complètement chargée
 window.addEventListener('load', function() {
