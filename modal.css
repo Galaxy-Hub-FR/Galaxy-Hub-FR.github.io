@@ -53,6 +53,7 @@
     font-size: 1.8rem;
 }
 
+/* Input field styles */
 .modal-content input {
     width: 100%;
     padding: 15px;
@@ -78,13 +79,18 @@
     gap: 10px;
 }
 
+/* Animation pour les boutons */
 .modal-buttons button {
     padding: 15px 30px;
     border-radius: 5px;
     font-size: 1.1rem;
     cursor: pointer;
     border: none;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.modal-buttons button:hover {
+    transform: scale(1.05); /* Effet de zoom au survol */
 }
 
 /* Bouton succès */
@@ -105,4 +111,26 @@
 
 .modal-buttons button:last-child:hover {
     background: var(--danger-btn-hover);
+}
+
+/* Responsiveness: Ajustements pour mobile */
+@media (max-width: 600px) {
+    .modal-content {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .modal-content h2 {
+        font-size: 1.5rem;
+    }
+
+    .modal-content input {
+        font-size: 1rem;
+        padding: 12px;
+    }
+
+    .modal-buttons button {
+        padding: 12px 20px;
+        font-size: 1rem;
+    }
 }
