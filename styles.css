@@ -212,6 +212,16 @@ header {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
 }
 
+/* Bouton Indisponible */
+.unavailable {
+    background-color: #666;
+    cursor: not-allowed;
+}
+
+.unavailable:hover {
+    background-color: #666;
+}
+
 /* Modal Styles */
 .modal {
     display: none;
