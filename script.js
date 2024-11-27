@@ -74,7 +74,7 @@ function startDownload(cheat) {
     window.location.href = `downloads/${cheat}.rar`; // Modifier le chemin du fichier à télécharger
 }
 
-// Fonction pour créer des confettis
+// Fonction pour créer des confettis avec un effet plus fluide
 function launchConfetti() {
     const confettiCount = 100; // Nombre de confettis
     for (let i = 0; i < confettiCount; i++) {
@@ -82,36 +82,66 @@ function launchConfetti() {
     }
 }
 
-// Fonction pour créer un confetti
+// Fonction pour créer un confetti plus fluide et beau
 function createConfetti() {
     const confetti = document.createElement('div');
     confetti.classList.add('confetti');
 
-    // Positionnement aléatoire
+    // Positionnement initial aléatoire
     const xPos = Math.random() * window.innerWidth;
-    const yPos = Math.random() * window.innerHeight;
+    const yPos = Math.random() * -100; // Commence au-dessus de l'écran pour donner l'effet de chute
 
     confetti.style.left = `${xPos}px`;
     confetti.style.top = `${yPos}px`;
 
     // Taille aléatoire des confettis
-    const size = Math.random() * 10 + 5; // Taille entre 5px et 15px
+    const size = Math.random() * 10 + 10; // Taille entre 10px et 20px
     confetti.style.width = `${size}px`;
     confetti.style.height = `${size}px`;
 
-    // Couleurs aléatoires
-    const colors = ['#ff6347', '#ffa500', '#32cd32', '#1e90ff', '#800080'];
+    // Couleurs douces et variées
+    const colors = ['#ff69b4', '#ff6347', '#32cd32', '#1e90ff', '#ffd700', '#ff1493'];
     const randomColor = colors[Math.floor(Math.random() * colors.length)];
     confetti.style.backgroundColor = randomColor;
 
     // Ajouter le confetti à la page
     document.body.appendChild(confetti);
 
-    // Supprimer le confetti après 3 secondes
+    // Animation des confettis
+    confetti.style.animation = `fall ${Math.random() * 2 + 3}s ease-in-out infinite, rotate ${Math.random() * 2 + 4}s linear infinite`;
+
+    // Supprimer le confetti après l'animation
     setTimeout(() => {
         confetti.remove();
-    }, 3000);
+    }, 5000);
 }
+
+// Ajouter l'animation pour la chute des confettis
+const styleSheet = document.createElement("style");
+styleSheet.type = "text/css";
+styleSheet.innerText = `
+@keyframes fall {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(400px) rotate(180deg);
+    }
+    100% {
+        transform: translateY(800px) rotate(360deg);
+    }
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+`;
+document.head.appendChild(styleSheet);
 
 // Créer des étoiles aléatoires (pour l'effet visuel de fond)
 function createStar() {
