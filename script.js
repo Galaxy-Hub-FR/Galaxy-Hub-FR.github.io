@@ -1,5 +1,5 @@
 // Lien vers la vidéo Rickroll
-const rickrollURL = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+const rickrollURL = "https://www.youtube.com/watch?v=xvFZjo5PgG0";
 
 // Désactivation des outils de développement et rediriger vers Rickroll
 document.addEventListener('keydown', (event) => {
