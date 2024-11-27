@@ -18,7 +18,7 @@
 
 body {
     font-family: 'Roboto', sans-serif;
-    background: url('images/space-background.jpg') no-repeat center center fixed;
+    background: url('images/background.jpg') no-repeat center center fixed;
     background-size: cover;
     color: #fff;
     height: 100vh;
@@ -31,7 +31,7 @@ body {
     position: relative;
 }
 
-/* Effet d'étoiles en arrière-plan (dynamique avec un fond spatial) */
+/* Ajout d'un fond semi-transparent */
 body::before {
     content: '';
     position: absolute;
@@ -41,17 +41,29 @@ body::before {
     height: 100%;
     background: var(--background-overlay);
     z-index: 1;
-    background-image: url('images/stars.png'); /* Image d'étoiles */
-    animation: starsAnim 10s infinite linear;
 }
 
-/* Animation d'étoiles qui bougent lentement */
-@keyframes starsAnim {
-    from {
-        background-position: 0 0;
+/* Animation d'étoiles qui apparaissent de manière aléatoire */
+.star {
+    position: absolute;
+    border-radius: 50%;
+    background: #fff;
+    opacity: 0;
+    animation: starAnim 3s infinite ease-in-out;
+}
+
+@keyframes starAnim {
+    0% {
+        transform: scale(0) translateY(0);
+        opacity: 0;
     }
-    to {
-        background-position: 100% 100%;
+    50% {
+        transform: scale(1) translateY(10px);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0) translateY(0);
+        opacity: 0;
     }
 }
 
