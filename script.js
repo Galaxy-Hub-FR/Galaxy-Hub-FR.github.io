@@ -162,3 +162,9 @@ function createStar() {
 
 // Créer des étoiles toutes les 300ms
 setInterval(createStar, 300);
+
+// Masquer le loader une fois que la page est complètement chargée
+window.addEventListener('load', function() {
+    const loader = document.getElementById('loader');
+    loader.style.display = 'none';  // Cacher le loader
+});
