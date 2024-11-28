@@ -1,128 +1,88 @@
-// Code admin
-const adminCode = "admin123"; // Code de connexion de l'admin
+// Fonction pour ajouter un nouveau cheat
+function addCheat() {
+    const cheatName = document.getElementById('cheatName').value;
+    const cheatDescription = document.getElementById('cheatDescription').value;
+    const cheatDownloadLink = document.getElementById('cheatDownloadLink').value;
 
-// Fonction pour authentifier l'admin
-function authenticateAdmin() {
-    const enteredCode = document.getElementById('admin-code').value;
-    const errorMessage = document.getElementById('admin-error');
+    // Vérifie si tous les champs sont remplis
+    if (cheatName && cheatDescription && cheatDownloadLink) {
+        // Crée une carte de cheat
+        const cheatCard = document.createElement('div');
+        cheatCard.classList.add('card');
+        
+        const cheatTitle = document.createElement('h2');
+        cheatTitle.textContent = cheatName;
+        cheatCard.appendChild(cheatTitle);
+        
+        const cheatDesc = document.createElement('p');
+        cheatDesc.textContent = cheatDescription;
+        cheatCard.appendChild(cheatDesc);
+        
+        const cheatBtn = document.createElement('button');
+        cheatBtn.classList.add('download-btn');
+        cheatBtn.textContent = 'Télécharger';
+        cheatBtn.onclick = function() {
+            window.location.href = cheatDownloadLink; // Redirige vers le lien de téléchargement
+        };
+        cheatCard.appendChild(cheatBtn);
+        
+        // Ajoute la nouvelle carte au conteneur de cheats sur la page principale
+        const cheatContainer = document.getElementById('cheats-container');
+        cheatContainer.appendChild(cheatCard);
 
-    if (enteredCode === adminCode) {
-        localStorage.setItem('adminLoggedIn', 'true');
-        window.location.href = 'admin_dashboard.html';
+        // Sauvegarde des cheats dans le localStorage (ou dans une base de données pour une solution plus avancée)
+        saveCheats(cheatName, cheatDescription, cheatDownloadLink);
     } else {
-        errorMessage.textContent = "Code administrateur incorrect.";
+        alert('Tous les champs doivent être remplis');
     }
 }
 
-window.onload = function() {
-    if (localStorage.getItem('adminLoggedIn') !== 'true') {
-        window.location.href = 'admin_panel.html';
-    }
-    loadCheats();
+// Fonction pour sauvegarder les cheats dans le localStorage
+function saveCheats(name, description, downloadLink) {
+    let cheats = JSON.parse(localStorage.getItem('cheats')) || [];
+
+    // Ajoute un nouveau cheat à la liste
+    cheats.push({
+        name: name,
+        description: description,
+        downloadLink: downloadLink
+    });
+
+    // Sauvegarde dans le localStorage
+    localStorage.setItem('cheats', JSON.stringify(cheats));
 }
 
-// Fonction pour charger les cheats
+// Fonction pour charger les cheats à partir du localStorage
 function loadCheats() {
-    const cheatList = JSON.parse(localStorage.getItem('cheats')) || [];
-    const cheatListContainer = document.getElementById('cheat-list');
-    cheatListContainer.innerHTML = '';
+    const cheats = JSON.parse(localStorage.getItem('cheats')) || [];
+    const cheatContainer = document.getElementById('cheats-container');
 
-    cheatList.forEach((cheat, index) => {
-        const cheatItem = document.createElement('li');
-        cheatItem.innerHTML = `
-            <strong>${cheat.title}</strong>
-            <p>${cheat.description}</p>
-            <p><a href="${cheat.link}" target="_blank">Télécharger</a></p>
-            <p>Clé : ${cheat.key}</p>
-            <p>Limite : ${cheat.limit === 0 ? 'Illimité' : cheat.limit} téléchargements</p>
-            <button onclick="deleteCheat(${index})">Supprimer</button>
-            <button onclick="editCheat(${index})">Modifier</button>
-        `;
-        cheatListContainer.appendChild(cheatItem);
+    // Crée une carte pour chaque cheat sauvegardé
+    cheats.forEach(cheat => {
+        const cheatCard = document.createElement('div');
+        cheatCard.classList.add('card');
+        
+        const cheatTitle = document.createElement('h2');
+        cheatTitle.textContent = cheat.name;
+        cheatCard.appendChild(cheatTitle);
+        
+        const cheatDesc = document.createElement('p');
+        cheatDesc.textContent = cheat.description;
+        cheatCard.appendChild(cheatDesc);
+        
+        const cheatBtn = document.createElement('button');
+        cheatBtn.classList.add('download-btn');
+        cheatBtn.textContent = 'Télécharger';
+        cheatBtn.onclick = function() {
+            window.location.href = cheat.downloadLink;
+        };
+        cheatCard.appendChild(cheatBtn);
+        
+        cheatContainer.appendChild(cheatCard);
     });
 }
 
-// Ajouter un cheat avec la clé d'activation
-function addCheat() {
-    const cheatTitle = document.getElementById('new-cheat-title').value;
-    const cheatDescription = document.getElementById('new-cheat-description').value;
-    const cheatLink = document.getElementById('new-cheat-link').value;
-    const cheatKey = document.getElementById('new-cheat-key').value;
-    const cheatLimit = parseInt(document.getElementById('new-cheat-limit').value) || 0;
-
-    if (cheatTitle && cheatDescription && cheatLink && cheatKey) {
-        const newCheat = {
-            title: cheatTitle,
-            description: cheatDescription,
-            link: cheatLink,
-            key: cheatKey,  // Stocke la clé d'activation
-            limit: cheatLimit,
-            downloads: 0
-        };
-
-        const cheatList = JSON.parse(localStorage.getItem('cheats')) || [];
-        cheatList.push(newCheat);
-        localStorage.setItem('cheats', JSON.stringify(cheatList));
-        loadCheats();
-        alert("Cheat ajouté avec succès !");
-    } else {
-        alert("Veuillez remplir tous les champs.");
-    }
-}
-
-// Supprimer un cheat
-function deleteCheat(index) {
-    const cheatList = JSON.parse(localStorage.getItem('cheats')) || [];
-    cheatList.splice(index, 1);
-    localStorage.setItem('cheats', JSON.stringify(cheatList));
+// Charger les cheats à la page d'accueil
+window.onload = function() {
     loadCheats();
-}
-
-// Modifier un cheat
-function editCheat(index) {
-    const cheatList = JSON.parse(localStorage.getItem('cheats')) || [];
-    const cheat = cheatList[index];
-
-    document.getElementById('new-cheat-title').value = cheat.title;
-    document.getElementById('new-cheat-description').value = cheat.description;
-    document.getElementById('new-cheat-link').value = cheat.link;
-    document.getElementById('new-cheat-key').value = cheat.key;
-    document.getElementById('new-cheat-limit').value = cheat.limit;
-
-    const addButton = document.querySelector('button');
-    addButton.textContent = "Modifier le cheat";
-    addButton.onclick = function() {
-        updateCheat(index);
-    };
-}
-
-// Mettre à jour un cheat
-function updateCheat(index) {
-    const cheatTitle = document.getElementById('new-cheat-title').value;
-    const cheatDescription = document.getElementById('new-cheat-description').value;
-    const cheatLink = document.getElementById('new-cheat-link').value;
-    const cheatKey = document.getElementById('new-cheat-key').value;
-    const cheatLimit = parseInt(document.getElementById('new-cheat-limit').value) || 0;
-
-    const cheatList = JSON.parse(localStorage.getItem('cheats')) || [];
-    const cheat = cheatList[index];
-
-    cheat.title = cheatTitle;
-    cheat.description = cheatDescription;
-    cheat.link = cheatLink;
-    cheat.key = cheatKey;
-    cheat.limit = cheatLimit;
-
-    localStorage.setItem('cheats', JSON.stringify(cheatList));
-    loadCheats();
-    alert("Cheat mis à jour avec succès !");
-    
-    document.querySelector('button').textContent = "Ajouter";
-    document.querySelector('button').onclick = addCheat;
-}
-
-// Déconnexion
-function logout() {
-    localStorage.removeItem('adminLoggedIn');
-    window.location.href = 'admin_panel.html';
-}
+};
