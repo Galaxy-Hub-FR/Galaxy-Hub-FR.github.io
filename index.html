@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Galaxy Hub</title>
     <link rel="stylesheet" href="styles.css">
+    
+    <!-- Ajouter ici les fichiers CSS pour l'admin, si nécessaires -->
+    <link rel="stylesheet" href="admin.css">
 </head>
 <body>
     <!-- Loader -->
@@ -26,7 +29,7 @@
 
         <!-- Admin Link -->
         <div class="admin-link">
-            <!-- Empêcher la rechargement de la page en utilisant un comportement de lien classique -->
+            <!-- Ajout d'un lien pour l'administration -->
             <a href="admin.html" id="admin-link">Connexion Admin</a>
         </div>
     </header>
@@ -88,12 +91,14 @@
 
     <script src="script.js"></script>
 
-    <!-- Ajout de JavaScript pour corriger le bug -->
+    <!-- Ajouter ici les fichiers JS pour l'admin -->
+    <script src="admin.js"></script>
+
+    <!-- JavaScript pour gérer les comportements du lien Admin -->
     <script>
-        // Ajouter un écouteur d'événement pour empêcher le rechargement
         document.getElementById('admin-link').addEventListener('click', function(event) {
-            event.preventDefault();  // Empêche le lien de recharger la page
-            window.location.href = this.href;  // Redirige vers la page admin.html
+            event.preventDefault(); // Empêche le comportement par défaut du lien
+            window.location.href = this.href; // Redirige vers la page admin.html
         });
     </script>
 </body>
