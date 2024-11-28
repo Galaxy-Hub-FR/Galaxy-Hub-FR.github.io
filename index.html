@@ -3,23 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galaxy Hub - Futuristic Experience</title>
+    <title>Galaxy Hub</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <!-- Loader -->
     <div id="loader" class="loader">
-        <div class="loading">
-            <span class="text-glow">Chargement</span>
-            <span class="dots">...</span>
-        </div>
+        <div class="loading">Chargement...</div>
     </div>
 
     <!-- Header -->
     <header>
         <div class="logo-container">
             <img src="images/logo.png" alt="Logo" class="logo">
-            <span class="site-name text-glow">Galaxy Hub</span>
+            <span class="site-name">Galaxy Hub</span>
         </div>
         <div class="discord-link">
             <a href="https://discord.gg/galaxy" target="_blank">
@@ -29,53 +26,60 @@
     </header>
 
     <!-- Contenu principal -->
-    <main class="content">
-        <h1 class="main-title text-glow">Bienvenue dans l'univers Galaxy Hub</h1>
-        <p class="description">Plongez dans une expérience galactique avec des outils et fonctionnalités avancés.</p>
+    <div class="content">
+        <h1 class="main-title">Bienvenue sur Galaxy Hub</h1>
+        <p class="description">Choisissez votre outil et cliquez sur "Télécharger" pour commencer.</p>
 
-        <!-- Section des fonctionnalités -->
+        <!-- Section des outils -->
         <div class="cards-container">
-            <!-- Carte personnalisée pour chaque fonctionnalité -->
+            <!-- Carte 1 -->
             <div class="card">
-                <h2 class="card-title text-glow">Galaxy Spoofer</h2>
-                <p>Protégez vos sessions de jeu avec notre technologie avancée.</p>
-                <button class="download-btn" onclick="showModal('Galaxy Spoofer')">Explorer</button>
+                <img src="images/spoofer-icon.png" alt="Spoofer" class="card-icon">
+                <h2>Spoofer</h2>
+                <p>Protection anti-bannissement pour vos jeux.</p>
+                <button class="download-btn" onclick="showModal('Spoofer')">Télécharger</button>
             </div>
 
+            <!-- Carte 2 -->
             <div class="card">
-                <h2 class="card-title text-glow">Boost Galactique</h2>
-                <p>Optimisez vos performances avec nos algorithmes intelligents.</p>
-                <button class="download-btn" onclick="showModal('Boost Galactique')">Explorer</button>
+                <img src="images/boost-icon.png" alt="GalaxyBoostFR" class="card-icon">
+                <h2>GalaxyBoostFR</h2>
+                <p>Boostez vos performances avec GalaxyBoostFR.</p>
+                <button class="download-btn" onclick="showModal('GalaxyBoostFR')">Télécharger</button>
             </div>
 
+            <!-- Carte 3 -->
             <div class="card">
-                <h2 class="card-title text-glow">Mod Universe</h2>
-                <p>Accédez à une expérience de personnalisation avancée.</p>
-                <button class="download-btn" onclick="showModal('Mod Universe')">Explorer</button>
+                <img src="images/modmenu-icon.png" alt="Mod Menu BETA" class="card-icon">
+                <h2>Mod Menu BETA</h2>
+                <p>Accédez à un menu de modding avancé.</p>
+                <button class="download-btn" onclick="showModal('ModMenuFiveMBETA')">Télécharger</button>
             </div>
 
+            <!-- Carte 4 -->
             <div class="card">
-                <h2 class="card-title text-glow">Speed Quantum</h2>
-                <p>Redécouvrez la vitesse avec cette technologie révolutionnaire.</p>
-                <button class="download-btn" onclick="showModal('Speed Quantum')">Explorer</button>
+                <img src="images/speedhack-icon.png" alt="SpeedHack" class="card-icon">
+                <h2>SpeedHack</h2>
+                <p>Accélérez votre jeu avec ce cheat exclusif.</p>
+                <button class="download-btn" onclick="showModal('SpeedHack')">Télécharger</button>
             </div>
 
-            <!-- Fonctionnalité à venir -->
+            <!-- Carte Indisponible -->
             <div class="card unavailable">
-                <h2 class="card-title text-glow">Prochain Module</h2>
-                <p>Restez connecté, une nouveauté arrive bientôt.</p>
-                <button class="download-btn" disabled>À venir</button>
+                <img src="images/coming-soon-icon.png" alt="Futur Cheat" class="card-icon">
+                <h2>Futur Cheat</h2>
+                <p>Prochainement disponible.</p>
+                <button class="download-btn" disabled>Indisponible</button>
             </div>
         </div>
-    </main>
+    </div>
 
-    <!-- Modal pour afficher plus d'informations -->
+    <!-- Modal pour le téléchargement -->
     <div id="modal" class="modal">
         <div class="modal-content">
-            <h2 id="cheat-name" class="text-glow"></h2>
-            <p>Explorez les fonctionnalités exclusives de ce module.</p>
-            <input type="text" id="codeInput" placeholder="Entrez votre code d'accès" />
-            <button onclick="verifyCode()">Accéder</button>
+            <h2 id="cheat-name"></h2>
+            <input type="text" id="codeInput" placeholder="Entrez votre code" />
+            <button onclick="verifyCode()">Vérifier</button>
             <p id="error-message"></p>
         </div>
     </div>
