@@ -26,7 +26,8 @@
 
         <!-- Admin Link -->
         <div class="admin-link">
-            <a href="admin.html">Connexion Admin</a>
+            <!-- Empêcher la rechargement de la page en utilisant un comportement de lien classique -->
+            <a href="admin.html" id="admin-link">Connexion Admin</a>
         </div>
     </header>
 
@@ -86,5 +87,14 @@
     </footer>
 
     <script src="script.js"></script>
+
+    <!-- Ajout de JavaScript pour corriger le bug -->
+    <script>
+        // Ajouter un écouteur d'événement pour empêcher le rechargement
+        document.getElementById('admin-link').addEventListener('click', function(event) {
+            event.preventDefault();  // Empêche le lien de recharger la page
+            window.location.href = this.href;  // Redirige vers la page admin.html
+        });
+    </script>
 </body>
 </html>
