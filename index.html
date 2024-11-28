@@ -5,7 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Galaxy Hub</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="admin.css">
+    <script>
+        // Fonction pour vérifier la combinaison Ctrl + M et rediriger vers la page de connexion admin
+        document.addEventListener('keydown', function (e) {
+            if (e.ctrlKey && e.key === 'm') {
+                window.location.href = 'admin-login.html'; // Redirige vers la page de connexion admin
+            }
+        });
+    </script>
 </head>
 <body>
     <!-- Loader -->
@@ -23,6 +30,11 @@
             <a href="https://discord.gg/galaxy" target="_blank">
                 <img src="images/discord-icon.png" alt="Discord" class="discord-icon">
             </a>
+        </div>
+
+        <!-- Admin Link (visible seulement après connexion) -->
+        <div class="admin-link">
+            <a href="admin-login.html">Connexion Admin</a>
         </div>
     </header>
 
@@ -76,54 +88,11 @@
         </div>
     </div>
 
-    <!-- Formulaire de connexion Admin (initialement caché) -->
-    <div id="login-modal" class="modal" style="display: none;">
-        <div class="modal-content">
-            <h2>Connexion Admin</h2>
-            <form id="login-form">
-                <label for="admin-username">Nom d'utilisateur :</label>
-                <input type="text" id="admin-username" required />
-                <label for="admin-password">Mot de passe :</label>
-                <input type="password" id="admin-password" required />
-                <button type="submit">Se connecter</button>
-            </form>
-            <p id="admin-error-message"></p>
-        </div>
-    </div>
-
     <!-- Footer -->
     <footer>
         <p>&copy; 2024 Galaxy Hub. Tous droits réservés.</p>
     </footer>
 
     <script src="script.js"></script>
-    <script>
-        // Fonction pour afficher le formulaire de connexion
-        function openAdminLogin() {
-            document.getElementById('login-modal').style.display = 'block';
-        }
-
-        // Gérer la soumission du formulaire de connexion admin
-        document.getElementById('login-form').addEventListener('submit', function(event) {
-            event.preventDefault(); // Empêche le rechargement de la page
-
-            const username = document.getElementById('admin-username').value;
-            const password = document.getElementById('admin-password').value;
-
-            // Simulation de vérification des identifiants (admin / admin123)
-            if (username === 'admin' && password === 'admin123') {
-                window.location.href = 'admin-dashboard.html'; // Rediriger vers le tableau de bord admin
-            } else {
-                document.getElementById('admin-error-message').textContent = 'Nom d\'utilisateur ou mot de passe incorrect';
-            }
-        });
-
-        // Raccourci clavier Ctrl + M pour ouvrir la page de connexion Admin
-        document.addEventListener('keydown', function(event) {
-            if (event.ctrlKey && event.key === 'm') {
-                openAdminLogin();
-            }
-        });
-    </script>
 </body>
 </html>
