@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Galaxy Hub</title>
     <link rel="stylesheet" href="styles.css">
-    
-    <!-- Ajouter ici les fichiers CSS pour l'admin, si nécessaires -->
     <link rel="stylesheet" href="admin.css">
 </head>
 <body>
@@ -29,7 +27,6 @@
 
         <!-- Admin Link -->
         <div class="admin-link">
-            <!-- Ajout d'un lien pour l'administration -->
             <a href="admin.html" id="admin-link">Connexion Admin</a>
         </div>
     </header>
@@ -40,7 +37,6 @@
 
         <!-- Section des cheats -->
         <div class="cards-container">
-            <!-- Cartes pour chaque cheat -->
             <div class="card">
                 <h2>Spoofer</h2>
                 <p>Protection anti-bannissement pour vos jeux.</p>
@@ -65,7 +61,6 @@
                 <button class="download-btn" onclick="showModal('SpeedHack')">Télécharger</button>
             </div>
 
-            <!-- Carte pour un cheat indisponible -->
             <div class="card unavailable">
                 <h2>Futur Cheat</h2>
                 <p>Prochainement disponible.</p>
@@ -90,15 +85,15 @@
     </footer>
 
     <script src="script.js"></script>
-
-    <!-- Ajouter ici les fichiers JS pour l'admin -->
     <script src="admin.js"></script>
 
-    <!-- JavaScript pour gérer les comportements du lien Admin -->
     <script>
         document.getElementById('admin-link').addEventListener('click', function(event) {
-            event.preventDefault(); // Empêche le comportement par défaut du lien
-            window.location.href = this.href; // Redirige vers la page admin.html
+            event.preventDefault();  // Empêche le comportement par défaut du lien
+            document.getElementById('loader').style.display = 'none'; // Cache le loader avant la redirection
+            setTimeout(function() {
+                window.location.href = 'admin.html';  // Redirige vers la page d'administration
+            }, 500);  // Ajoute un léger délai pour s'assurer que le loader disparaisse avant
         });
     </script>
 </body>
