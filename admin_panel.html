@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panneau d'Administration - Galaxy Hub</title>
+    <link rel="stylesheet" href="admin_styles.css">
+</head>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <img src="images/logo.png" alt="Logo" class="logo">
+            <span class="site-name">Galaxy Hub Admin</span>
+        </div>
+    </header>
+
+    <div id="admin-panel" class="admin-panel">
+        <h2>Panneau d'administration</h2>
+        <label for="admin-code">Entrez le code administrateur :</label>
+        <input type="password" id="admin-code" placeholder="Code admin" />
+        <button onclick="authenticateAdmin()">Se connecter</button>
+        <p id="admin-error" class="error-message"></p>
+    </div>
+
+    <script src="admin_script.js"></script>
+</body>
+</html>

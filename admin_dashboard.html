@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de bord Admin - Galaxy Hub</title>
+    <link rel="stylesheet" href="admin_styles.css">
+</head>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <img src="images/logo.png" alt="Logo" class="logo">
+            <span class="site-name">Galaxy Hub Admin</span>
+        </div>
+    </header>
+
+    <div id="manage-cheats" class="manage-cheats">
+        <h2>Gestion des Cheats</h2>
+
+        <div>
+            <h3>Ajouter un nouveau cheat</h3>
+            <input type="text" id="new-cheat-title" placeholder="Titre du cheat" />
+            <textarea id="new-cheat-description" placeholder="Description du cheat"></textarea>
+            <input type="text" id="new-cheat-link" placeholder="Lien de téléchargement" />
+            <input type="text" id="new-cheat-key" placeholder="Clé d'activation" />
+            <input type="number" id="new-cheat-limit" placeholder="Limite de téléchargements (0 pour illimité)" />
+            <button onclick="addCheat()">Ajouter</button>
+        </div>
+
+        <h3>Liste des Cheats</h3>
+        <ul id="cheat-list">
+            <!-- Liste des cheats sera générée ici -->
+        </ul>
+
+        <button onclick="logout()">Se déconnecter</button>
+    </div>
+
+    <script src="admin_script.js"></script>
+</body>
+</html>
