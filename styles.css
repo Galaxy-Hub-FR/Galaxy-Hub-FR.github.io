@@ -1,12 +1,13 @@
 /* Variables CSS pour les couleurs */
 :root {
-    --primary-color: #00bfff; /* Couleur bleu galaxie */
-    --secondary-color: #ccc;
-    --background-overlay: rgba(0, 0, 0, 0.6);
-    --header-background: rgba(0, 0, 0, 0.9);
-    --highlight-color: #ff6347; /* Pour les survols et accents */
-    --button-color: #1e90ff; /* Bleu Galaxy */
-    --modal-background: #2e2e2e;
+    --primary-color: #4facfe; /* Bleu dégradé galaxie */
+    --secondary-color: #b0b9c3; /* Gris clair et moderne */
+    --background-overlay: rgba(15, 15, 25, 0.85); /* Couleur de l'espace */
+    --header-background: rgba(20, 20, 40, 0.9);
+    --highlight-color: #ff6ec7; /* Rose nébuleuse */
+    --button-color: #576cff; /* Bleu lumineux */
+    --modal-background: #1a1a2e; /* Fond sombre élégant */
+    --star-color: #ffffff; /* Couleur des étoiles */
 }
 
 /* Global Styles */
@@ -18,9 +19,9 @@
 
 body {
     font-family: 'Roboto', sans-serif;
-    background: url('images/background.jpg') no-repeat center center fixed;
+    background: linear-gradient(135deg, #0f0f23, #1a1a35), url('images/background.jpg') no-repeat center center fixed;
     background-size: cover;
-    color: #fff;
+    color: #eaeaea;
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -31,7 +32,7 @@ body {
     position: relative;
 }
 
-/* Ajout d'un fond semi-transparent */
+/* Fond semi-transparent */
 body::before {
     content: '';
     position: absolute;
@@ -43,66 +44,31 @@ body::before {
     z-index: 1;
 }
 
-/* Animation d'étoiles qui apparaissent de manière aléatoire */
+/* Animations d'étoiles scintillantes */
 .star {
     position: absolute;
     border-radius: 50%;
-    background: #fff;
+    background: var(--star-color);
     opacity: 0;
     animation: starAnim 3s infinite ease-in-out;
 }
 
 @keyframes starAnim {
     0% {
-        transform: scale(0) translateY(0);
+        transform: scale(0);
         opacity: 0;
     }
     50% {
-        transform: scale(1) translateY(10px);
+        transform: scale(1);
         opacity: 1;
     }
     100% {
-        transform: scale(0) translateY(0);
+        transform: scale(0);
         opacity: 0;
     }
 }
 
-/* Confettis - Animation */
-.confetti {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    background-color: var(--highlight-color);
-    border-radius: 50%;
-    animation: confettiAnimation 3s infinite;
-    pointer-events: none;
-}
-
-/* Animation des confettis */
-@keyframes confettiAnimation {
-    0% {
-        opacity: 1;
-        transform: translateY(0) rotate(0deg);
-    }
-    25% {
-        transform: translateY(100px) rotate(90deg);
-        opacity: 1;
-    }
-    50% {
-        transform: translateY(200px) rotate(180deg);
-        opacity: 0.8;
-    }
-    75% {
-        transform: translateY(300px) rotate(270deg);
-        opacity: 0.6;
-    }
-    100% {
-        opacity: 0;
-        transform: translateY(400px) rotate(360deg);
-    }
-}
-
-/* Header Styles */
+/* Header */
 header {
     position: fixed;
     top: 0;
@@ -114,115 +80,75 @@ header {
     justify-content: space-between;
     align-items: center;
     z-index: 1000;
-    animation: slideIn 1s ease-out;
-}
-
-.logo-container {
-    display: flex;
-    align-items: center;
-}
-
-.logo {
-    width: 40px;
-    margin-right: 10px;
+    backdrop-filter: blur(10px);
 }
 
 .site-name {
-    font-size: 24px;
+    font-size: 2rem;
     font-weight: 700;
     color: var(--primary-color);
+    text-shadow: 0px 0px 10px var(--primary-color);
 }
 
-.discord-link {
-    padding: 10px;
-}
-
-.discord-icon {
-    width: 40px;
-}
-
-/* Main Content Styles */
+/* Contenu principal */
 .content {
-    margin-top: 100px;
+    margin-top: 80px;
     z-index: 2;
 }
 
 .main-title {
-    font-size: 3rem;
+    font-size: 3.5rem;
     font-weight: bold;
-    color: var(--primary-color);
+    background: linear-gradient(90deg, #4facfe, #00f2fe, #6a82fb);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     margin-bottom: 20px;
     animation: fadeInUp 2s ease-out;
 }
 
 .description {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     color: var(--secondary-color);
     margin-bottom: 40px;
-    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
-}
-
-.download-section {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    flex-wrap: wrap;
-    z-index: 2;
+    text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.7);
 }
 
 .download-item {
-    background: rgba(0, 0, 0, 0.7);
-    border-radius: 10px;
-    padding: 20px;
-    width: 250px;
+    background: rgba(20, 20, 40, 0.9);
+    border: 1px solid var(--primary-color);
+    border-radius: 15px;
+    padding: 25px;
+    width: 260px;
     text-align: center;
-    animation: bounceInUp 1s ease-out;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(10px); /* Effet flou pour un aspect galaxie */
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(15px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.download-item h2 {
-    font-size: 1.6rem;
-    margin-bottom: 15px;
-    color: var(--primary-color);
-    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
-}
-
-.download-item p {
-    font-size: 1rem;
-    color: var(--secondary-color);
-    margin-bottom: 20px;
+.download-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px var(--primary-color);
 }
 
 .download-btn {
-    background-color: var(--primary-color);
+    background: var(--button-color);
     color: white;
     font-size: 1.2rem;
-    padding: 15px 30px;
+    padding: 12px 30px;
     border: none;
-    border-radius: 50px;
+    border-radius: 30px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
+    transition: background 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
 }
 
 .download-btn:hover {
-    background-color: var(--highlight-color);
-    transform: scale(1.1);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+    background: var(--highlight-color);
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px var(--highlight-color);
 }
 
-/* Bouton Indisponible */
-.unavailable {
-    background-color: #666;
-    cursor: not-allowed;
-}
-
-.unavailable:hover {
-    background-color: #666;
-}
-
-/* Modal Styles */
+/* Effets modaux */
 .modal {
     display: none;
     position: fixed;
@@ -230,7 +156,7 @@ header {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(15, 15, 25, 0.95);
     justify-content: center;
     align-items: center;
     z-index: 1001;
@@ -243,63 +169,15 @@ header {
 .modal-content {
     background: var(--modal-background);
     padding: 40px;
-    border-radius: 10px;
-    width: 350px;
+    border-radius: 15px;
+    width: 400px;
     text-align: center;
-    animation: slideInUp 0.5s ease-out;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.7);
+    animation: fadeIn 0.5s ease-out;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.8);
 }
 
 .modal-content h2 {
     color: var(--primary-color);
     margin-bottom: 20px;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
-}
-
-.modal input {
-    padding: 10px;
-    width: 80%;
-    margin-bottom: 20px;
-    border: none;
-    border-radius: 5px;
-    background: #333;
-    color: white;
-    transition: background 0.3s ease;
-}
-
-.modal input:focus {
-    background: var(--primary-color);
-}
-
-.modal button {
-    padding: 10px 20px;
-    background: var(--primary-color);
-    border: none;
-    border-radius: 5px;
-    color: white;
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.modal button:hover {
-    background: var(--highlight-color);
-}
-
-#error-message {
-    color: red;
-    font-size: 0.9rem;
-}
-
-/* Footer Styles */
-footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    background: var(--header-background);
-    padding: 10px;
-    text-align: center;
-    color: var(--secondary-color);
-    font-size: 0.9rem;
-    z-index: 999;
+    text-shadow: 1px 1px 10px var(--primary-color);
 }
