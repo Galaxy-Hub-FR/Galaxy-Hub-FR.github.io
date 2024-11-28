@@ -6,12 +6,25 @@
     <title>Galaxy Hub</title>
     <link rel="stylesheet" href="styles.css">
     <script>
-        // Fonction pour vérifier la combinaison Ctrl + M et rediriger vers la page de connexion admin
-        document.addEventListener('keydown', function (e) {
+        // Fonction pour écouter la combinaison Ctrl+M et afficher la page de login
+        document.addEventListener('keydown', function(e) {
             if (e.ctrlKey && e.key === 'm') {
-                window.location.href = 'admin-login.html'; // Redirige vers la page de connexion admin
+                document.getElementById('login-modal').style.display = 'block'; // Affiche la fenêtre de login
             }
         });
+
+        // Fonction pour vérifier les identifiants et rediriger vers admin-dashboard
+        function login() {
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+
+            // Simuler une vérification des identifiants
+            if (username === 'admin' && password === 'password123') {
+                window.location.href = 'admin-dashboard.html'; // Redirige vers le dashboard admin
+            } else {
+                document.getElementById('error-message').innerText = 'Identifiants incorrects.';
+            }
+        }
     </script>
 </head>
 <body>
@@ -73,13 +86,14 @@
         </div>
     </div>
 
-    <!-- Modal pour entrer le code -->
-    <div id="modal" class="modal">
+    <!-- Modal de login -->
+    <div id="login-modal" class="modal" style="display:none;">
         <div class="modal-content">
-            <h2 id="cheat-name"></h2>
-            <input type="text" id="codeInput" placeholder="Entrez votre code" />
-            <button onclick="verifyCode()">Vérifier</button>
-            <p id="error-message"></p>
+            <h2>Connexion Admin</h2>
+            <input type="text" id="username" placeholder="Nom d'utilisateur" />
+            <input type="password" id="password" placeholder="Mot de passe" />
+            <button onclick="login()">Se connecter</button>
+            <p id="error-message" style="color:red;"></p>
         </div>
     </div>
 
