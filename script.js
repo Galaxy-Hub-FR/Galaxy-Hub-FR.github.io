@@ -84,6 +84,7 @@ function closeModal() {
 
 // Déclencher le téléchargement
 function triggerDownload(cheat) {
+    // Vérifier si le fichier existe bien (on pourrait faire un test ici avec un serveur ou un chemin correct)
     const link = document.createElement('a');
     link.href = `downloads/${cheat}.rar`; // Chemin du fichier de téléchargement
     link.download = `${cheat}.rar`; // Nom du fichier téléchargé
