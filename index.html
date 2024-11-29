@@ -6,45 +6,96 @@
     <title>Galaxy Hub</title>
     <link rel="stylesheet" href="styles.css">
     <script>
-        // Fonction pour écouter la combinaison Ctrl+M et afficher la page de login
-        document.addEventListener('keydown', function(e) {
-            if (e.ctrlKey && e.key === 'm') {
-                document.getElementById('login-modal').style.display = 'block'; // Affiche la fenêtre de login
-            }
-        });
+        // Codes valides pour chaque cheat
+        const validCodes = {
+            Spoofer: "458554456585565656863846246425242742747240732470247204721472215525HBBDBVHGZBBVGH-GALAXY-HUB",
+            GalaxyBoostFR: "863846246425242742747240732470247204721472215525HBB863846246425242742747240732470247204721472215525HBB",
+            ModMenuFiveMBETA: "Fivem-OP-GALAXY-654321",
+            SpeedHack: "SPEED-FAST-GALAXY-098765",
+        };
 
-        // Fonction pour afficher le modal avec le nom du cheat
-        function showModal(cheatName) {
-            document.getElementById('cheat-name').innerText = cheatName; // Affiche le nom du cheat dans le modal
-            document.getElementById('modal').style.display = 'block'; // Affiche le modal de téléchargement
+        // Vérification de l'état à l'ouverture de la page
+        function initializeCheats() {
+            for (let cheat in validCodes) {
+                if (localStorage.getItem(cheat) === "unlocked") {
+                    markAsCompleted(cheat);
+                }
+            }
         }
 
-        // Fonction pour vérifier le code d'accès et continuer avec le téléchargement
+        // Sauvegarder l'état dans LocalStorage
+        function saveState(cheat) {
+            localStorage.setItem(cheat, "unlocked");
+        }
+
+        // Marquer un cheat comme débloqué dans l'UI
+        function markAsCompleted(cheat) {
+            const button = document.querySelector(`button[onclick="showModal('${cheat}')"]`);
+            if (button) {
+                button.textContent = "Déjà téléchargé";
+                button.disabled = true;
+                button.classList.add('completed');
+            }
+        }
+
+        // Afficher le modal pour entrer un code
+        function showModal(cheat) {
+            if (localStorage.getItem(cheat) === "unlocked") {
+                alert("Ce cheat a déjà été débloqué !");
+                return;
+            }
+
+            const modal = document.getElementById('modal');
+            document.getElementById('cheat-name').textContent = cheat;
+            modal.setAttribute('data-cheat', cheat); // Stocker le nom du cheat en cours
+            modal.classList.add('show');
+        }
+
+        // Vérifier le code saisi
         function verifyCode() {
-            var code = document.getElementById('codeInput').value;
-            var cheatName = document.getElementById('cheat-name').innerText;
+            const modal = document.getElementById('modal');
+            const cheat = modal.getAttribute('data-cheat');
+            const enteredCode = document.getElementById('codeInput').value;
+            const errorMessage = document.getElementById('error-message');
+            const codeInputField = document.getElementById('codeInput');
 
-            // Vérifie si le code est correct (ici un exemple simple)
-            if (code === '12345') {
-                alert('Téléchargement du cheat ' + cheatName + ' lancé!');
-                document.getElementById('modal').style.display = 'none'; // Ferme le modal après vérification
+            // Réinitialiser l'erreur précédente
+            errorMessage.textContent = "";
+            codeInputField.classList.remove('error');
+            errorMessage.classList.remove('show');
+
+            // Vérification du code
+            if (validCodes[cheat] === enteredCode) {
+                errorMessage.textContent = "";
+                saveState(cheat);
+                markAsCompleted(cheat);
+                alert("Code correct ! Téléchargement débloqué.");
+                closeModal();
+                triggerDownload(cheat);
             } else {
-                document.getElementById('error-message').innerText = 'Code incorrect!';
+                errorMessage.textContent = "Code incorrect. Veuillez réessayer.";
+                codeInputField.classList.add('error');
+                errorMessage.classList.add('show');
             }
         }
 
-        // Fonction pour connecter l'utilisateur (admin)
-        function login() {
-            var username = document.getElementById('username').value;
-            var password = document.getElementById('password').value;
-
-            // Simuler une vérification des identifiants
-            if (username === 'admin' && password === 'password123') {
-                window.location.href = 'admin-dashboard.html'; // Redirige vers le dashboard admin
-            } else {
-                document.getElementById('error-message').innerText = 'Identifiants incorrects.';
-            }
+        // Fermer le modal
+        function closeModal() {
+            const modal = document.getElementById('modal');
+            modal.classList.remove('show');
+            document.getElementById('codeInput').value = ""; // Réinitialiser le champ code
         }
+
+        // Déclencher le téléchargement
+        function triggerDownload(cheat) {
+            const link = document.createElement('a');
+            link.href = `downloads/${cheat}.rar`; // Chemin du fichier
+            link.download = `${cheat}.rar`; // Nom du fichier
+            link.click(); // Simuler le clic pour télécharger
+        }
+
+        // Initialisation
+        window.onload = initializeCheats;
     </script>
 </head>
 <body>
@@ -116,22 +167,9 @@
         </div>
     </div>
 
-    <!-- Modal de login -->
-    <div id="login-modal" class="modal" style="display:none;">
-        <div class="modal-content">
-            <h2>Connexion Admin</h2>
-            <input type="text" id="username" placeholder="Nom d'utilisateur" />
-            <input type="password" id="password" placeholder="Mot de passe" />
-            <button onclick="login()">Se connecter</button>
-            <p id="error-message" style="color:red;"></p>
-        </div>
-    </div>
-
     <!-- Footer -->
     <footer>
         <p>&copy; 2024 Galaxy Hub. Tous droits réservés.</p>
     </footer>
-
-    <script src="script.js"></script>
 </body>
 </html>
