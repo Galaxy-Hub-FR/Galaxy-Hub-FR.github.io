@@ -185,6 +185,10 @@ header {
     max-width: 400px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.8);
     transition: all 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column; /* Ajoute cette ligne pour la disposition verticale des éléments */
+    justify-content: center; /* Centrer verticalement les éléments */
+    align-items: center; /* Centrer horizontalement les éléments */
 }
 
 .modal-content h2 {
