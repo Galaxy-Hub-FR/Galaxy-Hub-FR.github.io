@@ -24,7 +24,8 @@ body {
     background-size: cover;
     color: #eaeaea;
     height: 100vh;
-    overflow: auto; /* Autorise le défilement */
+    overflow: hidden;
+    overflow-y: auto; /* Permet le défilement */
 }
 
 /* Header */
@@ -40,6 +41,37 @@ header {
     align-items: center;
     z-index: 1000;
     backdrop-filter: blur(10px);
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+}
+
+.site-name {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-shadow: 0px 0px 10px var(--primary-color);
+}
+
+.discord-link img {
+    width: 40px; /* Largeur ajustée */
+    height: 40px; /* Hauteur ajustée */
+    object-fit: contain; /* Garantit que l'image garde ses proportions sans être déformée */
+    transition: transform 0.2s ease, opacity 0.3s ease;
+}
+
+.discord-link img:hover {
+    transform: scale(1.2);
+    opacity: 0.8;
 }
 
 /* Contenu principal */
@@ -60,6 +92,15 @@ header {
     animation: fadeIn 1.5s ease-out;
 }
 
+.description {
+    font-size: 1.3rem;
+    color: var(--secondary-color);
+    margin-bottom: 40px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 /* Cartes des téléchargements */
 .cards-container {
     display: grid;
@@ -67,6 +108,7 @@ header {
     gap: 20px;
     padding: 20px;
     justify-items: center;
+    transition: all 0.5s ease-in-out;
 }
 
 .card {
@@ -87,6 +129,34 @@ header {
     background: rgba(20, 20, 40, 0.95);
 }
 
+.card h2 {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.card p {
+    font-size: 1rem;
+    color: var(--secondary-color);
+    margin-bottom: 20px;
+}
+
+.card .download-btn {
+    background: var(--button-color);
+    color: white;
+    font-size: 1rem;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.card .download-btn:hover {
+    background: var(--highlight-color);
+    transform: scale(1.05);
+}
+
 /* Modals */
 .modal {
     display: none;
@@ -95,10 +165,11 @@ header {
     left: 0;
     width: 100%;
     height: 100%;
-    background: var(--background-overlay);
+    background: rgba(15, 15, 25, 0.95);
     justify-content: center;
     align-items: center;
     z-index: 1001;
+    transition: all 0.3s ease;
 }
 
 .modal.show {
@@ -113,10 +184,16 @@ header {
     width: 90%;
     max-width: 400px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.8);
-    animation: fadeIn 0.5s ease-out;
+    transition: all 0.3s ease-in-out;
 }
 
-/* Champs et boutons */
+.modal-content h2 {
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    animation: fadeIn 1.5s ease-out;
+}
+
 .modal-content input {
     padding: 10px;
     width: calc(100% - 20px);
@@ -141,4 +218,10 @@ header {
 
 .modal-content button:hover {
     background: var(--highlight-color);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
 }
