@@ -25,6 +25,38 @@
                 document.getElementById('error-message').innerText = 'Identifiants incorrects.';
             }
         }
+
+        // Charger les cheats depuis un fichier JSON
+        function loadCheats() {
+            fetch("cheats.json")
+            .then(response => response.json())
+            .then(cheats => {
+                const cheatContainer = document.querySelector(".cards-container");
+                cheatContainer.innerHTML = ''; // Vider le conteneur avant de charger les nouveaux cheats
+
+                cheats.forEach(cheat => {
+                    const cheatCard = document.createElement("div");
+                    cheatCard.classList.add("card");
+                    cheatCard.innerHTML = `
+                        <h2>${cheat.title}</h2>
+                        <p>${cheat.description}</p>
+                        <button class="download-btn" onclick="showModal('${cheat.title}')">Télécharger</button>
+                    `;
+                    cheatContainer.appendChild(cheatCard);
+                });
+            })
+            .catch(error => {
+                console.error("Erreur lors du chargement des cheats:", error);
+            });
+        }
+
+        // Fonction pour afficher une fenêtre modale de téléchargement
+        function showModal(cheatName) {
+            alert("Vous allez télécharger : " + cheatName);
+        }
+
+        // Appeler loadCheats lors du chargement de la page
+        window.onload = loadCheats;
     </script>
 </head>
 <body>
@@ -52,37 +84,7 @@
 
         <!-- Section des cheats -->
         <div class="cards-container">
-            <!-- Cartes pour chaque cheat -->
-            <div class="card">
-                <h2>Spoofer</h2>
-                <p>Protection anti-bannissement pour vos jeux.</p>
-                <button class="download-btn" onclick="showModal('Spoofer')">Télécharger</button>
-            </div>
-
-            <div class="card">
-                <h2>GalaxyBoostFR</h2>
-                <p>Boostez vos performances avec GalaxyBoostFR.</p>
-                <button class="download-btn" onclick="showModal('GalaxyBoostFR')">Télécharger</button>
-            </div>
-
-            <div class="card">
-                <h2>Mod Menu BETA</h2>
-                <p>Accédez à un menu de modding avancé.</p>
-                <button class="download-btn" onclick="showModal('ModMenuFiveMBETA')">Télécharger</button>
-            </div>
-
-            <div class="card">
-                <h2>SpeedHack</h2>
-                <p>Accélérez votre jeu avec ce cheat exclusif.</p>
-                <button class="download-btn" onclick="showModal('SpeedHack')">Télécharger</button>
-            </div>
-
-            <!-- Carte pour un cheat indisponible -->
-            <div class="card unavailable">
-                <h2>Futur Cheat</h2>
-                <p>Prochainement disponible.</p>
-                <button class="download-btn" disabled>Indisponible</button>
-            </div>
+            <!-- Les cartes des cheats seront générées ici par JavaScript -->
         </div>
     </div>
 
