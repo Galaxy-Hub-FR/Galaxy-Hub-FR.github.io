@@ -63,8 +63,9 @@ header {
 }
 
 .discord-link img {
-    width: 40px;
-    height: 40px;
+    width: 40px; /* Largeur ajustée */
+    height: 40px; /* Hauteur ajustée */
+    object-fit: contain; /* Garantit que l'image garde ses proportions sans être déformée */
     transition: transform 0.2s ease, opacity 0.3s ease;
 }
 
