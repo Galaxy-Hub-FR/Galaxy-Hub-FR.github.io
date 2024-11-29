@@ -15,26 +15,33 @@
         </div>
     </header>
 
-    <div id="manage-cheats" class="manage-cheats">
-        <h2>Gestion des Cheats</h2>
+    <main>
+        <div id="manage-cheats" class="manage-cheats">
+            <h2>Gestion des Cheats</h2>
 
-        <div>
-            <h3>Ajouter un nouveau cheat</h3>
-            <input type="text" id="new-cheat-title" placeholder="Titre du cheat" />
-            <textarea id="new-cheat-description" placeholder="Description du cheat"></textarea>
-            <input type="text" id="new-cheat-link" placeholder="Lien de téléchargement" />
-            <input type="text" id="new-cheat-key" placeholder="Clé d'activation" />
-            <input type="number" id="new-cheat-limit" placeholder="Limite de téléchargements (0 pour illimité)" />
-            <button onclick="addCheat()">Ajouter</button>
+            <!-- Formulaire pour ajouter un nouveau cheat -->
+            <section class="new-cheat-form">
+                <h3>Ajouter un nouveau cheat</h3>
+                <input type="text" id="new-cheat-title" placeholder="Titre du cheat" required />
+                <textarea id="new-cheat-description" placeholder="Description du cheat" required></textarea>
+                <input type="url" id="new-cheat-link" placeholder="Lien de téléchargement" required />
+                <input type="text" id="new-cheat-key" placeholder="Clé d'activation" required />
+                <input type="number" id="new-cheat-limit" placeholder="Limite de téléchargements (0 pour illimité)" min="0" />
+                <button onclick="addCheat()">Ajouter</button>
+            </section>
+
+            <!-- Liste des cheats existants -->
+            <section class="cheat-list">
+                <h3>Liste des Cheats</h3>
+                <ul id="cheat-list">
+                    <!-- Liste des cheats sera générée ici -->
+                </ul>
+            </section>
+
+            <!-- Déconnexion -->
+            <button onclick="logout()" class="logout-btn">Se déconnecter</button>
         </div>
-
-        <h3>Liste des Cheats</h3>
-        <ul id="cheat-list">
-            <!-- Liste des cheats sera générée ici -->
-        </ul>
-
-        <button onclick="logout()">Se déconnecter</button>
-    </div>
+    </main>
 
     <script src="admin_script.js"></script>
 </body>
