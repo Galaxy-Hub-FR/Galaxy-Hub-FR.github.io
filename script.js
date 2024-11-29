@@ -1,4 +1,3 @@
-<script>
 // Codes valides pour chaque cheat
 const validCodes = {
     Spoofer: "458554456585565656863846246425242742747240732470247204721472215525HBBDBVHGZBBVGH-GALAXY-HUB",
@@ -88,9 +87,10 @@ function triggerDownload(cheat) {
     const link = document.createElement('a');
     link.href = `downloads/${cheat}.rar`; // Chemin du fichier de téléchargement
     link.download = `${cheat}.rar`; // Nom du fichier téléchargé
+    document.body.appendChild(link); // Ajouter l'élément au DOM
     link.click(); // Simuler le clic pour déclencher le téléchargement
+    document.body.removeChild(link); // Retirer le lien du DOM après le clic
 }
 
 // Initialisation des cheats lorsque la page se charge
 window.onload = initializeCheats;
-</script>
