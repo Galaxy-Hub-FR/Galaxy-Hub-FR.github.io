@@ -5,105 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Galaxy Hub</title>
     <link rel="stylesheet" href="styles.css">
-    <script>
-        // Codes valides pour chaque cheat
-        const validCodes = {
-            Spoofer: "458554456585565656863846246425242742747240732470247204721472215525HBBDBVHGZBBVGH-GALAXY-HUB",
-            GalaxyBoostFR: "863846246425242742747240732470247204721472215525HBB863846246425242742747240732470247204721472215525HBB",
-            ModMenuFiveMBETA: "Fivem-OP-GALAXY-654321",
-            SpeedHack: "SPEED-FAST-GALAXY-098765",
-        };
-
-        // Vérification de l'état à l'ouverture de la page
-        function initializeCheats() {
-            for (let cheat in validCodes) {
-                if (localStorage.getItem(cheat) === "unlocked") {
-                    markAsCompleted(cheat);
-                }
-            }
-        }
-
-        // Sauvegarder l'état dans LocalStorage
-        function saveState(cheat) {
-            localStorage.setItem(cheat, "unlocked");
-        }
-
-        // Marquer un cheat comme débloqué dans l'UI
-        function markAsCompleted(cheat) {
-            const button = document.querySelector(`button[onclick="showModal('${cheat}')"]`);
-            if (button) {
-                button.textContent = "Déjà téléchargé";
-                button.disabled = true;
-                button.classList.add('completed');
-            }
-        }
-
-        // Afficher le modal pour entrer un code
-        function showModal(cheat) {
-            if (localStorage.getItem(cheat) === "unlocked") {
-                alert("Ce cheat a déjà été débloqué !");
-                return;
-            }
-
-            const modal = document.getElementById('modal');
-            document.getElementById('cheat-name').textContent = cheat;
-            modal.setAttribute('data-cheat', cheat); // Stocker le nom du cheat en cours
-            modal.classList.add('show');
-        }
-
-        // Vérifier le code saisi
-        function verifyCode() {
-            const modal = document.getElementById('modal');
-            const cheat = modal.getAttribute('data-cheat');
-            const enteredCode = document.getElementById('codeInput').value;
-            const errorMessage = document.getElementById('error-message');
-            const codeInputField = document.getElementById('codeInput');
-
-            // Réinitialiser l'erreur précédente
-            errorMessage.textContent = "";
-            codeInputField.classList.remove('error');
-            errorMessage.classList.remove('show');
-
-            // Vérification du code
-            if (validCodes[cheat] === enteredCode) {
-                errorMessage.textContent = "";
-                saveState(cheat);
-                markAsCompleted(cheat);
-                alert("Code correct ! Téléchargement débloqué.");
-                closeModal();
-                triggerDownload(cheat);
-            } else {
-                errorMessage.textContent = "Code incorrect. Veuillez réessayer.";
-                codeInputField.classList.add('error');
-                errorMessage.classList.add('show');
-            }
-        }
-
-        // Fermer le modal
-        function closeModal() {
-            const modal = document.getElementById('modal');
-            modal.classList.remove('show');
-            document.getElementById('codeInput').value = ""; // Réinitialiser le champ code
-        }
-
-        // Déclencher le téléchargement
-        function triggerDownload(cheat) {
-            const link = document.createElement('a');
-            link.href = `downloads/${cheat}.rar`; // Chemin du fichier
-            link.download = `${cheat}.rar`; // Nom du fichier
-            link.click(); // Simuler le clic pour télécharger
-        }
-
-        // Initialisation
-        window.onload = initializeCheats;
-    </script>
 </head>
 <body>
-    <!-- Loader -->
-    <div id="loader" class="loader">
-        <div class="loading">Chargement...</div>
-    </div>
-
     <!-- Header -->
     <header>
         <div class="logo-container">
@@ -117,6 +20,7 @@
         </div>
     </header>
 
+    <!-- Contenu principal -->
     <div class="content">
         <h1 class="main-title">Bienvenue sur Galaxy Hub</h1>
         <p class="description">Choisissez votre cheat et cliquez sur "Télécharger" pour commencer.</p>
@@ -127,32 +31,25 @@
             <div class="card">
                 <h2>Spoofer</h2>
                 <p>Protection anti-bannissement pour vos jeux.</p>
-                <button class="download-btn" onclick="showModal('Spoofer')">Télécharger</button>
+                <button class="download-btn" data-cheat="Spoofer">Télécharger</button>
             </div>
 
             <div class="card">
                 <h2>GalaxyBoostFR</h2>
                 <p>Boostez vos performances avec GalaxyBoostFR.</p>
-                <button class="download-btn" onclick="showModal('GalaxyBoostFR')">Télécharger</button>
+                <button class="download-btn" data-cheat="GalaxyBoostFR">Télécharger</button>
             </div>
 
             <div class="card">
                 <h2>Mod Menu BETA</h2>
                 <p>Accédez à un menu de modding avancé.</p>
-                <button class="download-btn" onclick="showModal('ModMenuFiveMBETA')">Télécharger</button>
+                <button class="download-btn" data-cheat="ModMenuFiveMBETA">Télécharger</button>
             </div>
 
             <div class="card">
                 <h2>SpeedHack</h2>
                 <p>Accélérez votre jeu avec ce cheat exclusif.</p>
-                <button class="download-btn" onclick="showModal('SpeedHack')">Télécharger</button>
-            </div>
-
-            <!-- Carte pour un cheat indisponible -->
-            <div class="card unavailable">
-                <h2>Futur Cheat</h2>
-                <p>Prochainement disponible.</p>
-                <button class="download-btn" disabled>Indisponible</button>
+                <button class="download-btn" data-cheat="SpeedHack">Télécharger</button>
             </div>
         </div>
     </div>
@@ -162,7 +59,7 @@
         <div class="modal-content">
             <h2 id="cheat-name"></h2>
             <input type="text" id="codeInput" placeholder="Entrez votre code" />
-            <button onclick="verifyCode()">Vérifier</button>
+            <button id="verifyCodeBtn">Vérifier</button>
             <p id="error-message" style="color:red;"></p>
         </div>
     </div>
@@ -171,5 +68,7 @@
     <footer>
         <p>&copy; 2024 Galaxy Hub. Tous droits réservés.</p>
     </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
