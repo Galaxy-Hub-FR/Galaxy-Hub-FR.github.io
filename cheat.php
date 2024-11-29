@@ -1,34 +1,26 @@
-<?php
-// Définir l'entête pour le JSON
-header('Content-Type: application/json');
-
-// Récupérer les données envoyées
-$data = json_decode(file_get_contents('php://input'), true);
-
-// Vérifier si les données sont complètes
-if (isset($data['title'], $data['description'], $data['link'], $data['key'], $data['limit'])) {
-    // Charger les cheats existants
-    $cheats = json_decode(file_get_contents('cheats.json'), true);
-
-    // Ajouter le nouveau cheat à la liste
-    $newCheat = [
-        'title' => $data['title'],
-        'description' => $data['description'],
-        'link' => $data['link'],
-        'key' => $data['key'],
-        'limit' => $data['limit']
-    ];
-
-    // Ajouter à la liste des cheats
-    $cheats[] = $newCheat;
-
-    // Enregistrer la nouvelle liste dans le fichier JSON
-    if (file_put_contents('cheats.json', json_encode($cheats, JSON_PRETTY_PRINT))) {
-        echo json_encode(['success' => true]);
-    } else {
-        echo json_encode(['success' => false, 'message' => 'Échec de l\'enregistrement.']);
+[
+    {
+        "title": "Spoofer",
+        "description": "Protection anti-bannissement pour vos jeux.",
+        "link": "https://example.com/download/spoofer",
+        "key": "abcd1234"
+    },
+    {
+        "title": "GalaxyBoostFR",
+        "description": "Boostez vos performances avec GalaxyBoostFR.",
+        "link": "https://example.com/download/galaxyboostfr",
+        "key": "efgh5678"
+    },
+    {
+        "title": "Mod Menu BETA",
+        "description": "Accédez à un menu de modding avancé.",
+        "link": "https://example.com/download/modmenubeta",
+        "key": "ijkl9012"
+    },
+    {
+        "title": "SpeedHack",
+        "description": "Accélérez votre jeu avec ce cheat exclusif.",
+        "link": "https://example.com/download/speedhack",
+        "key": "mnop3456"
     }
-} else {
-    echo json_encode(['success' => false, 'message' => 'Données manquantes.']);
-}
-?>
+]
