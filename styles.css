@@ -15,6 +15,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    transition: all 0.2s ease-in-out; /* Douce transition globale */
 }
 
 body {
@@ -24,6 +25,7 @@ body {
     color: #eaeaea;
     height: 100vh;
     overflow: hidden;
+    overflow-y: auto; /* Permet le défilement */
 }
 
 /* Header */
@@ -48,9 +50,9 @@ header {
 }
 
 .logo {
-    width: 50px; /* Taille ajustée pour les icônes */
-    height: 50px; /* Dimensions fixes pour uniformité */
-    object-fit: contain; /* Garde l'aspect des logos */
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
 }
 
 .site-name {
@@ -61,7 +63,7 @@ header {
 }
 
 .discord-link img {
-    width: 40px; /* Taille réduite pour l'icône Discord */
+    width: 40px;
     height: 40px;
     transition: transform 0.2s ease, opacity 0.3s ease;
 }
@@ -76,6 +78,7 @@ header {
     margin-top: 100px;
     z-index: 2;
     text-align: center;
+    color: #fff;
 }
 
 .main-title {
@@ -85,12 +88,16 @@ header {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 20px;
+    animation: fadeIn 1.5s ease-out;
 }
 
 .description {
     font-size: 1.3rem;
     color: var(--secondary-color);
     margin-bottom: 40px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* Cartes des téléchargements */
@@ -100,6 +107,7 @@ header {
     gap: 20px;
     padding: 20px;
     justify-items: center;
+    transition: all 0.5s ease-in-out;
 }
 
 .card {
@@ -108,15 +116,16 @@ header {
     border-radius: 15px;
     padding: 20px;
     width: 100%;
-    max-width: 300px; /* Taille maximale pour éviter les cartes énormes */
+    max-width: 300px;
     text-align: center;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.6);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
 }
 
 .card:hover {
     transform: translateY(-10px);
     box-shadow: 0 10px 30px var(--primary-color);
+    background: rgba(20, 20, 40, 0.95);
 }
 
 .card h2 {
@@ -159,6 +168,7 @@ header {
     justify-content: center;
     align-items: center;
     z-index: 1001;
+    transition: all 0.3s ease;
 }
 
 .modal.show {
@@ -173,12 +183,14 @@ header {
     width: 90%;
     max-width: 400px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.8);
+    transition: all 0.3s ease-in-out;
 }
 
 .modal-content h2 {
     font-size: 1.8rem;
     color: var(--primary-color);
     margin-bottom: 20px;
+    animation: fadeIn 1.5s ease-out;
 }
 
 .modal-content input {
@@ -205,4 +217,10 @@ header {
 
 .modal-content button:hover {
     background: var(--highlight-color);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
 }
