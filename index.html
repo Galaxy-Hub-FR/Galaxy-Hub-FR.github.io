@@ -9,7 +9,7 @@
         // Fonction pour écouter la combinaison Ctrl+M et afficher la page de login
         document.addEventListener('keydown', function(e) {
             if (e.ctrlKey && e.key === 'm') {
-                document.getElementById('login-modal').style.display = 'block'; // Affiche la fenêtre de login
+                document.getElementById('login-modal').style.display = 'flex'; // Affiche la fenêtre de login en mode flex
             }
         });
 
@@ -22,9 +22,16 @@
             if (username === 'admin' && password === 'password123') {
                 window.location.href = 'admin-dashboard.html'; // Redirige vers le dashboard admin
             } else {
-                document.getElementById('error-message').innerText = 'Identifiants incorrects.';
+                document.getElementById('error-message').innerText = 'Identifiants incorrects.'; // Affiche un message d'erreur
             }
         }
+
+        // Fonction pour fermer le modal de login lorsque l'utilisateur clique en dehors du modal
+        window.onclick = function(event) {
+            if (event.target === document.getElementById('login-modal')) {
+                document.getElementById('login-modal').style.display = 'none'; // Ferme le modal
+            }
+        };
     </script>
 </head>
 <body>
