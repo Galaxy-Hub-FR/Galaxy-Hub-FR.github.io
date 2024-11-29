@@ -6,49 +6,45 @@
     <title>Galaxy Hub</title>
     <link rel="stylesheet" href="styles.css">
     <script>
-        // Fonction pour afficher les cheats manuellement (sans fichier JSON)
-        function loadCheats() {
-            const cheats = [
-                {
-                    title: "Cheat 1",
-                    description: "Un cheat puissant pour votre jeu préféré.",
-                    download_link: "cheat1.zip"
-                },
-                {
-                    title: "Cheat 2",
-                    description: "Ce cheat va vous donner un avantage décisif.",
-                    download_link: "cheat2.zip"
-                },
-                {
-                    title: "Cheat 3",
-                    description: "Un cheat pour améliorer votre expérience de jeu.",
-                    download_link: "cheat3.zip"
-                }
-            ];
+        // Fonction pour écouter la combinaison Ctrl+M et afficher la page de login
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'm') {
+                document.getElementById('login-modal').style.display = 'block'; // Affiche la fenêtre de login
+            }
+        });
 
-            const cheatContainer = document.querySelector(".cards-container");
-            cheatContainer.innerHTML = ''; // Vider le conteneur avant de charger les nouveaux cheats
-
-            cheats.forEach(cheat => {
-                const cheatCard = document.createElement("div");
-                cheatCard.classList.add("card");
-                cheatCard.innerHTML = `
-                    <div class="card-header">
-                        <h2>${cheat.title}</h2>
-                    </div>
-                    <div class="card-body">
-                        <p>${cheat.description}</p>
-                    </div>
-                    <div class="card-footer">
-                        <a href="${cheat.download_link}" class="download-btn" target="_blank">Télécharger</a>
-                    </div>
-                `;
-                cheatContainer.appendChild(cheatCard);
-            });
+        // Fonction pour afficher le modal avec le nom du cheat
+        function showModal(cheatName) {
+            document.getElementById('cheat-name').innerText = cheatName; // Affiche le nom du cheat dans le modal
+            document.getElementById('modal').style.display = 'block'; // Affiche le modal de téléchargement
         }
 
-        // Appeler loadCheats lors du chargement de la page
-        window.onload = loadCheats;
+        // Fonction pour vérifier le code d'accès et continuer avec le téléchargement
+        function verifyCode() {
+            var code = document.getElementById('codeInput').value;
+            var cheatName = document.getElementById('cheat-name').innerText;
+
+            // Vérifie si le code est correct (ici un exemple simple)
+            if (code === '12345') {
+                alert('Téléchargement du cheat ' + cheatName + ' lancé!');
+                document.getElementById('modal').style.display = 'none'; // Ferme le modal après vérification
+            } else {
+                document.getElementById('error-message').innerText = 'Code incorrect!';
+            }
+        }
+
+        // Fonction pour connecter l'utilisateur (admin)
+        function login() {
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+
+            // Simuler une vérification des identifiants
+            if (username === 'admin' && password === 'password123') {
+                window.location.href = 'admin-dashboard.html'; // Redirige vers le dashboard admin
+            } else {
+                document.getElementById('error-message').innerText = 'Identifiants incorrects.';
+            }
+        }
     </script>
 </head>
 <body>
@@ -64,7 +60,7 @@
             <span class="site-name">Galaxy Hub</span>
         </div>
         <div class="discord-link">
-            <a href="https://discord.gg/MuaNANFnPq" target="_blank">
+            <a href="https://discord.gg/galaxy" target="_blank">
                 <img src="images/discord-icon.png" alt="Discord" class="discord-icon">
             </a>
         </div>
@@ -76,7 +72,58 @@
 
         <!-- Section des cheats -->
         <div class="cards-container">
-            <!-- Les cartes des cheats seront générées ici par JavaScript -->
+            <!-- Cartes pour chaque cheat -->
+            <div class="card">
+                <h2>Spoofer</h2>
+                <p>Protection anti-bannissement pour vos jeux.</p>
+                <button class="download-btn" onclick="showModal('Spoofer')">Télécharger</button>
+            </div>
+
+            <div class="card">
+                <h2>GalaxyBoostFR</h2>
+                <p>Boostez vos performances avec GalaxyBoostFR.</p>
+                <button class="download-btn" onclick="showModal('GalaxyBoostFR')">Télécharger</button>
+            </div>
+
+            <div class="card">
+                <h2>Mod Menu BETA</h2>
+                <p>Accédez à un menu de modding avancé.</p>
+                <button class="download-btn" onclick="showModal('ModMenuFiveMBETA')">Télécharger</button>
+            </div>
+
+            <div class="card">
+                <h2>SpeedHack</h2>
+                <p>Accélérez votre jeu avec ce cheat exclusif.</p>
+                <button class="download-btn" onclick="showModal('SpeedHack')">Télécharger</button>
+            </div>
+
+            <!-- Carte pour un cheat indisponible -->
+            <div class="card unavailable">
+                <h2>Futur Cheat</h2>
+                <p>Prochainement disponible.</p>
+                <button class="download-btn" disabled>Indisponible</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de téléchargement -->
+    <div id="modal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <h2 id="cheat-name"></h2>
+            <input type="text" id="codeInput" placeholder="Entrez votre code" />
+            <button onclick="verifyCode()">Vérifier</button>
+            <p id="error-message" style="color:red;"></p>
+        </div>
+    </div>
+
+    <!-- Modal de login -->
+    <div id="login-modal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <h2>Connexion Admin</h2>
+            <input type="text" id="username" placeholder="Nom d'utilisateur" />
+            <input type="password" id="password" placeholder="Mot de passe" />
+            <button onclick="login()">Se connecter</button>
+            <p id="error-message" style="color:red;"></p>
         </div>
     </div>
 
