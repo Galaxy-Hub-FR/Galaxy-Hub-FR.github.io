@@ -6,53 +6,45 @@
     <title>Galaxy Hub</title>
     <link rel="stylesheet" href="styles.css">
     <script>
-        // Fonction pour écouter la combinaison Ctrl+M et afficher la page de login
-        document.addEventListener('keydown', function(e) {
-            if (e.ctrlKey && e.key === 'm') {
-                document.getElementById('login-modal').style.display = 'block'; // Affiche la fenêtre de login
-            }
-        });
-
-        // Fonction pour vérifier les identifiants et rediriger vers admin-dashboard
-        function login() {
-            var username = document.getElementById('username').value;
-            var password = document.getElementById('password').value;
-
-            // Simuler une vérification des identifiants
-            if (username === 'admin' && password === 'password123') {
-                window.location.href = 'admin-dashboard.html'; // Redirige vers le dashboard admin
-            } else {
-                document.getElementById('error-message').innerText = 'Identifiants incorrects.';
-            }
-        }
-
-        // Charger les cheats depuis un fichier JSON
+        // Fonction pour afficher les cheats manuellement (sans fichier JSON)
         function loadCheats() {
-            fetch("cheats.json")
-            .then(response => response.json())
-            .then(cheats => {
-                const cheatContainer = document.querySelector(".cards-container");
-                cheatContainer.innerHTML = ''; // Vider le conteneur avant de charger les nouveaux cheats
+            const cheats = [
+                {
+                    title: "Cheat 1",
+                    description: "Un cheat puissant pour votre jeu préféré.",
+                    download_link: "cheat1.zip"
+                },
+                {
+                    title: "Cheat 2",
+                    description: "Ce cheat va vous donner un avantage décisif.",
+                    download_link: "cheat2.zip"
+                },
+                {
+                    title: "Cheat 3",
+                    description: "Un cheat pour améliorer votre expérience de jeu.",
+                    download_link: "cheat3.zip"
+                }
+            ];
 
-                cheats.forEach(cheat => {
-                    const cheatCard = document.createElement("div");
-                    cheatCard.classList.add("card");
-                    cheatCard.innerHTML = `
+            const cheatContainer = document.querySelector(".cards-container");
+            cheatContainer.innerHTML = ''; // Vider le conteneur avant de charger les nouveaux cheats
+
+            cheats.forEach(cheat => {
+                const cheatCard = document.createElement("div");
+                cheatCard.classList.add("card");
+                cheatCard.innerHTML = `
+                    <div class="card-header">
                         <h2>${cheat.title}</h2>
+                    </div>
+                    <div class="card-body">
                         <p>${cheat.description}</p>
-                        <button class="download-btn" onclick="showModal('${cheat.title}')">Télécharger</button>
-                    `;
-                    cheatContainer.appendChild(cheatCard);
-                });
-            })
-            .catch(error => {
-                console.error("Erreur lors du chargement des cheats:", error);
+                    </div>
+                    <div class="card-footer">
+                        <a href="${cheat.download_link}" class="download-btn" target="_blank">Télécharger</a>
+                    </div>
+                `;
+                cheatContainer.appendChild(cheatCard);
             });
-        }
-
-        // Fonction pour afficher une fenêtre modale de téléchargement
-        function showModal(cheatName) {
-            alert("Vous allez télécharger : " + cheatName);
         }
 
         // Appeler loadCheats lors du chargement de la page
@@ -85,17 +77,6 @@
         <!-- Section des cheats -->
         <div class="cards-container">
             <!-- Les cartes des cheats seront générées ici par JavaScript -->
-        </div>
-    </div>
-
-    <!-- Modal de login -->
-    <div id="login-modal" class="modal" style="display:none;">
-        <div class="modal-content">
-            <h2>Connexion Admin</h2>
-            <input type="text" id="username" placeholder="Nom d'utilisateur" />
-            <input type="password" id="password" placeholder="Mot de passe" />
-            <button onclick="login()">Se connecter</button>
-            <p id="error-message" style="color:red;"></p>
         </div>
     </div>
 
