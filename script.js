@@ -6,76 +6,45 @@ const validCodes = {
     SpeedHack: "SPEED-FAST-GALAXY-098765",
 };
 
-// Vérification de l'état à l'ouverture de la page
-function initializeCheats() {
-    for (let cheat in validCodes) {
-        if (localStorage.getItem(cheat) === "unlocked") {
-            markAsCompleted(cheat);
-        }
-    }
-}
+// Gestion des événements pour afficher le modal
+document.querySelectorAll('.download-btn').forEach(button => {
+    button.addEventListener('click', function () {
+        const cheatName = this.getAttribute('data-cheat');
+        openModal(cheatName);
+    });
+});
 
-// Sauvegarder l'état dans LocalStorage
-function saveState(cheat) {
-    localStorage.setItem(cheat, "unlocked");
-}
-
-// Marquer un cheat comme débloqué dans l'UI
-function markAsCompleted(cheat) {
-    const button = document.querySelector(`button[onclick="showModal('${cheat}')"]`);
-    if (button) {
-        button.textContent = "Déjà téléchargé";
-        button.disabled = true;
-        button.classList.add('completed');
-    }
-}
-
-// Afficher le modal pour entrer un code
-function showModal(cheat) {
-    if (localStorage.getItem(cheat) === "unlocked") {
-        alert("Ce cheat a déjà été débloqué !");
-        return;
-    }
-
+// Fonction pour ouvrir le modal
+function openModal(cheat) {
     const modal = document.getElementById('modal');
-    document.getElementById('cheat-name').textContent = cheat;
-    modal.setAttribute('data-cheat', cheat); // Stocker le nom du cheat en cours
-    modal.classList.add('show');
+    const cheatNameElement = document.getElementById('cheat-name');
+    cheatNameElement.textContent = cheat;
+    modal.setAttribute('data-cheat', cheat); // Sauvegarder le nom du cheat dans l'attribut data
+    modal.style.display = 'block';
 }
 
-// Vérifier le code saisi
-function verifyCode() {
+// Vérification du code d'accès
+document.getElementById('verifyCodeBtn').addEventListener('click', function () {
     const modal = document.getElementById('modal');
     const cheat = modal.getAttribute('data-cheat');
     const enteredCode = document.getElementById('codeInput').value;
     const errorMessage = document.getElementById('error-message');
-    const codeInputField = document.getElementById('codeInput');
 
-    // Réinitialiser l'erreur précédente
-    errorMessage.textContent = "";
-    codeInputField.classList.remove('error');
-    errorMessage.classList.remove('show');
-
-    // Vérification du code
     if (validCodes[cheat] === enteredCode) {
-        errorMessage.textContent = "";
-        saveState(cheat);
-        markAsCompleted(cheat);
-        alert("Code correct ! Téléchargement débloqué.");
-        closeModal();
+        alert(`Code correct ! Téléchargement de ${cheat} débloqué.`);
         triggerDownload(cheat);
+        closeModal();
     } else {
         errorMessage.textContent = "Code incorrect. Veuillez réessayer.";
-        codeInputField.classList.add('error');
-        errorMessage.classList.add('show');
     }
-}
+});
 
-// Fermer le modal
+// Fonction pour fermer le modal
 function closeModal() {
     const modal = document.getElementById('modal');
-    modal.classList.remove('show');
-    document.getElementById('codeInput').value = ""; // Réinitialiser le champ code
+    modal.style.display = 'none';
+    document.getElementById('codeInput').value = ""; // Réinitialiser le champ
+    document.getElementById('error-message').textContent = ""; // Réinitialiser l'erreur
 }
 
 // Déclencher le téléchargement
@@ -86,5 +55,10 @@ function triggerDownload(cheat) {
     link.click(); // Simuler le clic pour télécharger
 }
 
-// Initialisation
-window.onload = initializeCheats;
+// Fermer le modal en cliquant à l'extérieur
+window.onclick = function (event) {
+    const modal = document.getElementById('modal');
+    if (event.target === modal) {
+        closeModal();
+    }
+};
