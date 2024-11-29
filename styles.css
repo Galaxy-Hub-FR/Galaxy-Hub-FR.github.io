@@ -159,30 +159,32 @@ header {
 
 /* Modals */
 .modal {
-    display: none;
+    display: none; /* Modal caché par défaut */
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%); /* Centrer le modal par rapport à son propre centre */
+    transform: translate(-50%, -50%); /* Centrer le modal */
     width: 300px; /* Taille réduite pour le modal */
     background: rgba(15, 15, 25, 0.95);
     justify-content: center;
     align-items: center;
     z-index: 1001;
     transition: all 0.3s ease;
-    display: flex; /* S'assurer que le modal utilise Flexbox */
-    border-radius: 10px; /* Bord arrondi pour un effet plus élégant */
+    display: flex;
+    border-radius: 10px;
 }
 
 .modal.show {
-    display: flex;
+    display: flex; /* Afficher le modal lorsque la classe "show" est ajoutée */
 }
 
 .modal-content {
     background: var(--modal-background);
-    padding: 20px;
+    padding: 30px;
     border-radius: 10px;
     text-align: center;
+    width: 90%;
+    max-width: 400px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.8);
     transition: all 0.3s ease-in-out;
     display: flex;
@@ -192,9 +194,9 @@ header {
 }
 
 .modal-content h2 {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     color: var(--primary-color);
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     animation: fadeIn 1.5s ease-out;
 }
 
@@ -222,6 +224,15 @@ header {
 
 .modal-content button:hover {
     background: var(--highlight-color);
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    color: var(--secondary-color);
+    cursor: pointer;
 }
 
 /* Animations */
