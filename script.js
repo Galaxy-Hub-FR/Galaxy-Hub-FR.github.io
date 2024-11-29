@@ -6,19 +6,7 @@ const validCodes = {
     SpeedHack: "SPEED-FAST-GALAXY-098765",
 };
 
-// Désactiver le clic droit et certaines touches de développement
-document.addEventListener("contextmenu", function(e) {
-    e.preventDefault(); // Empêche le menu contextuel (clic droit)
-});
-
-document.addEventListener("keydown", function(e) {
-    if ((e.ctrlKey && e.shiftKey && e.key === "I") || (e.ctrlKey && e.shiftKey && e.key === "C") || (e.ctrlKey && e.key === "U")) {
-        e.preventDefault(); // Empêche l'ouverture des outils de développement
-        alert("Vous ne pouvez pas utiliser cette fonctionnalité !");
-    }
-});
-
-// Vérification de l'état des cheats à l'ouverture de la page
+// Vérification de l'état à l'ouverture de la page
 function initializeCheats() {
     for (let cheat in validCodes) {
         if (localStorage.getItem(cheat) === "unlocked") {
@@ -27,12 +15,12 @@ function initializeCheats() {
     }
 }
 
-// Sauvegarder l'état dans LocalStorage (le cheat débloqué)
+// Sauvegarder l'état dans LocalStorage
 function saveState(cheat) {
     localStorage.setItem(cheat, "unlocked");
 }
 
-// Marquer un cheat comme débloqué dans l'interface
+// Marquer un cheat comme débloqué dans l'UI
 function markAsCompleted(cheat) {
     const button = document.querySelector(`button[onclick="showModal('${cheat}')"]`);
     if (button) {
@@ -55,12 +43,18 @@ function showModal(cheat) {
     modal.classList.add('show');
 }
 
-// Vérifier le code saisi par l'utilisateur
+// Vérifier le code saisi
 function verifyCode() {
     const modal = document.getElementById('modal');
     const cheat = modal.getAttribute('data-cheat');
     const enteredCode = document.getElementById('codeInput').value;
     const errorMessage = document.getElementById('error-message');
+    const codeInputField = document.getElementById('codeInput');
+
+    // Réinitialiser l'erreur précédente
+    errorMessage.textContent = "";
+    codeInputField.classList.remove('error');
+    errorMessage.classList.remove('show');
 
     // Vérification du code
     if (validCodes[cheat] === enteredCode) {
@@ -72,6 +66,8 @@ function verifyCode() {
         triggerDownload(cheat);
     } else {
         errorMessage.textContent = "Code incorrect. Veuillez réessayer.";
+        codeInputField.classList.add('error');
+        errorMessage.classList.add('show');
     }
 }
 
@@ -84,14 +80,11 @@ function closeModal() {
 
 // Déclencher le téléchargement
 function triggerDownload(cheat) {
-    // Vérifier si le fichier existe bien (on pourrait faire un test ici avec un serveur ou un chemin correct)
     const link = document.createElement('a');
-    link.href = `downloads/${cheat}.rar`; // Chemin du fichier de téléchargement
-    link.download = `${cheat}.rar`; // Nom du fichier téléchargé
-    document.body.appendChild(link); // Ajouter l'élément au DOM
-    link.click(); // Simuler le clic pour déclencher le téléchargement
-    document.body.removeChild(link); // Retirer le lien du DOM après le clic
+    link.href = `downloads/${cheat}.rar`; // Chemin du fichier
+    link.download = `${cheat}.rar`; // Nom du fichier
+    link.click(); // Simuler le clic pour télécharger
 }
 
-// Initialisation des cheats lorsque la page se charge
+// Initialisation
 window.onload = initializeCheats;
