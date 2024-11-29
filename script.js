@@ -62,3 +62,15 @@ window.onclick = function (event) {
         closeModal();
     }
 };
+
+// Désactiver le clic droit
+document.addEventListener('contextmenu', function (event) {
+    event.preventDefault();
+});
+
+// Désactiver les raccourcis clavier Ctrl+Shift+I et Ctrl+U
+document.addEventListener('keydown', function (event) {
+    if (event.ctrlKey && (event.key === 'I' || event.key === 'i' || event.key === 'u' || event.key === 'U' || (event.shiftKey && event.key === 'I'))) {
+        event.preventDefault(); // Empêche l'ouverture des outils de développement
+    }
+});
