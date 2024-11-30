@@ -9,17 +9,22 @@ const validCodes = {
 // Gestion des événements pour afficher le modal
 document.querySelectorAll('.download-btn').forEach(button => {
     const cheat = button.getAttribute('data-cheat');
-    
-    // Vérifier si le cheat est actif
-    if (!isCheatEnabled(cheat)) {
-        button.disabled = true; // Désactiver le bouton
-        button.textContent = "Indisponible"; // Changer le texte du bouton
-    }
 
+    // Ajouter un événement au clic sur chaque bouton
     button.addEventListener('click', function () {
         const modal = document.getElementById('modal');
+        const cheatName = cheat; // Le cheat sélectionné
+        const cheatData = validCodes[Object.keys(validCodes).find(key => validCodes[key].cheatName === cheatName)];
+
         modal.classList.add('show'); // Afficher le modal
-        modal.setAttribute('data-cheat', cheat);
+        modal.setAttribute('data-cheat', cheatName);
+        document.getElementById('cheat-name').textContent = cheatName; // Afficher le nom du cheat dans le modal
+
+        // Si le cheat est désactivé ou épuisé
+        if (!cheatData.isActive || cheatData.usesLeft <= 0) {
+            alert(`Le cheat ${cheatName} est ${cheatData.isActive ? "épuisé" : "indisponible"}.`);
+            closeModal();
+        }
     });
 });
 
