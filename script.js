@@ -3,7 +3,7 @@ const validCodes = {
     Spoofer: "458554456585565656863846246425242742747240732470247204721472215525HBBDBVHGZBBVGH-GALAXY-HUB",
     GalaxyBoostFR: "863846246425242742747240732470247204721472215525HBB863846246425242742747240732470247204721472215525HBB",
     ValorantMod: "Galaxy_crack_784250105812522525878922425525221005225022020",
-    Galaxy_Activateur: "Activateur_galaxy_745787444555855585214055455255525555656",
+    Galaxy_activateur: "Activateur_galaxy_745787444555855585214055455255525555656",
 };
 
 // Gestion des événements pour afficher le modal
@@ -18,9 +18,9 @@ document.querySelectorAll('.download-btn').forEach(button => {
 function openModal(cheat) {
     const modal = document.getElementById('modal');
     const cheatNameElement = document.getElementById('cheat-name');
-    cheatNameElement.textContent = cheat;
+    cheatNameElement.textContent = `Téléchargement : ${cheat}`;
     modal.setAttribute('data-cheat', cheat); // Sauvegarder le nom du cheat dans l'attribut data
-    modal.style.display = 'block';
+    modal.classList.add('show'); // Afficher le modal
 }
 
 // Vérification du code d'accès
@@ -42,7 +42,7 @@ document.getElementById('verifyCodeBtn').addEventListener('click', function () {
 // Fonction pour fermer le modal
 function closeModal() {
     const modal = document.getElementById('modal');
-    modal.style.display = 'none';
+    modal.classList.remove('show'); // Cacher le modal
     document.getElementById('codeInput').value = ""; // Réinitialiser le champ
     document.getElementById('error-message').textContent = ""; // Réinitialiser l'erreur
 }
@@ -70,7 +70,10 @@ document.addEventListener('contextmenu', function (event) {
 
 // Désactiver les raccourcis clavier Ctrl+Shift+I et Ctrl+U
 document.addEventListener('keydown', function (event) {
-    if (event.ctrlKey && (event.key === 'I' || event.key === 'i' || event.key === 'u' || event.key === 'U' || (event.shiftKey && event.key === 'I'))) {
+    if (
+        event.ctrlKey &&
+        (event.key === 'I' || event.key === 'i' || event.key === 'u' || event.key === 'U' || (event.shiftKey && event.key === 'I'))
+    ) {
         event.preventDefault(); // Empêche l'ouverture des outils de développement
     }
 });
