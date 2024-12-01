@@ -3,13 +3,13 @@ const validCodes = {
     "458554": { cheatName: "Spoofer", isActive: true, usesLeft: 1 },
     "863846": { cheatName: "GalaxyBoostFR", isActive: true, usesLeft: 3 },
     "784250": { cheatName: "ValorantMod", isActive: false, usesLeft: 0 }, // Désactivé
-    "745787": { cheatName: "Galaxy_activateur", isActive: true, usesLeft: 5 }
+    "745787": { cheatName: "GalaxyActivateur", isActive: true, usesLeft: 5 }
 };
 
 // Gestion des événements pour afficher le modal
 document.querySelectorAll('.download-btn').forEach(button => {
     const cheat = button.getAttribute('data-cheat');
-    
+
     // Vérifier si le cheat est actif
     if (!isCheatEnabled(cheat)) {
         button.disabled = true; // Désactiver le bouton
@@ -19,7 +19,7 @@ document.querySelectorAll('.download-btn').forEach(button => {
     button.addEventListener('click', function () {
         const modal = document.getElementById('modal');
         const cheatTitle = document.getElementById('modalCheatTitle');
-        
+
         // Mettre à jour le titre et afficher le modal
         cheatTitle.textContent = cheat;
         modal.classList.add('show');
@@ -77,10 +77,10 @@ function isCheatEnabled(cheatName) {
     return Object.values(validCodes).some(code => code.cheatName === cheatName && code.isActive);
 }
 
-// Fermer le modal en cliquant à l'extérieur ou sur la croix
+// Fermer le modal en cliquant à l'extérieur
 window.addEventListener('click', function (event) {
     const modal = document.getElementById('modal');
-    if (event.target === modal || event.target.classList.contains('close')) {
+    if (event.target === modal) {
         closeModal();
     }
 });
