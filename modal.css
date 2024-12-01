@@ -21,12 +21,17 @@
     max-width: 500px; /* Limite la taille de la modale */
     height: auto;
     background: var(--modal-background);
-    display: flex;
+    display: none; /* Caché par défaut */
     justify-content: center;
     align-items: center;
     z-index: 1000;
     padding: 20px;
     border-radius: 15px;
+}
+
+/* Afficher le modal lorsque la classe "show" est ajoutée */
+.code-modal.show {
+    display: flex; /* Le modal devient visible */
 }
 
 /* Contenu de la modale */
