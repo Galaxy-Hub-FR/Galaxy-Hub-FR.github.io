@@ -14,6 +14,13 @@ function saveCodesToLocalStorage() {
     localStorage.setItem('validCodes', JSON.stringify(validCodes));
 }
 
+// Cacher le modal par défaut au chargement
+window.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('modal');
+    modal.classList.remove('show'); // Assurez-vous que la classe .show n'est pas présente
+    modal.setAttribute('aria-hidden', 'true');
+});
+
 // Gestion des événements pour afficher le modal uniquement sur clic d'un bouton
 document.querySelectorAll('.download-btn').forEach(button => {
     const cheat = button.getAttribute('data-cheat');
@@ -60,7 +67,7 @@ document.getElementById('verifyCodeBtn').addEventListener('click', function () {
         // Sauvegarder l'état mis à jour
         saveCodesToLocalStorage();
 
-        closeModal();
+        closeModal(); // Fermer le modal après vérification
     } else if (codeData && codeData.usesLeft === 0) {
         // Code utilisé mais plus disponible
         alert("Ce code a atteint sa limite d'utilisations.");
@@ -122,33 +129,4 @@ document.addEventListener('keydown', function (event) {
     if (event.key === "Escape" && modal.classList.contains('show')) {
         closeModal();
     }
-});
-
-// Désactiver le clic droit
-document.addEventListener('contextmenu', (event) => {
-    event.preventDefault();
-});
-
-// Désactiver les raccourcis clavier liés aux outils de développement
-document.addEventListener('keydown', (event) => {
-    if (event.key === "F12" || (event.ctrlKey && (event.shiftKey || event.key === "U"))) {
-        event.preventDefault();
-    }
-});
-
-// Bloquer l'inspection via le clic prolongé sur la page
-let clickHold = false;
-
-document.addEventListener('mousedown', () => {
-    clickHold = true;
-    setTimeout(() => {
-        if (clickHold) {
-            alert("L'inspection est désactivée sur ce site.");
-            clickHold = false;
-        }
-    }, 1000);
-});
-
-document.addEventListener('mouseup', () => {
-    clickHold = false;
 });
