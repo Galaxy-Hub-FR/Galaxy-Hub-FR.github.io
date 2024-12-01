@@ -18,8 +18,12 @@ document.querySelectorAll('.download-btn').forEach(button => {
 
     button.addEventListener('click', function () {
         const modal = document.getElementById('modal');
-        modal.classList.add('show'); // Afficher le modal
-        modal.setAttribute('aria-hidden', 'false'); // Mettre à jour l'attribut aria
+        const cheatTitle = document.getElementById('modalCheatTitle');
+        
+        // Mettre à jour le titre et afficher le modal
+        cheatTitle.textContent = cheat;
+        modal.classList.add('show');
+        modal.setAttribute('aria-hidden', 'false');
         modal.setAttribute('data-cheat', cheat);
     });
 });
@@ -73,10 +77,18 @@ function isCheatEnabled(cheatName) {
     return Object.values(validCodes).some(code => code.cheatName === cheatName && code.isActive);
 }
 
-// Fermer le modal en cliquant à l'extérieur
-window.onclick = function (event) {
+// Fermer le modal en cliquant à l'extérieur ou sur la croix
+window.addEventListener('click', function (event) {
     const modal = document.getElementById('modal');
-    if (event.target === modal) {
+    if (event.target === modal || event.target.classList.contains('close')) {
         closeModal();
     }
-};
+});
+
+// Ajouter un écouteur pour la touche "Échap" pour fermer le modal
+document.addEventListener('keydown', function (event) {
+    const modal = document.getElementById('modal');
+    if (event.key === "Escape" && modal.classList.contains('show')) {
+        closeModal();
+    }
+});
