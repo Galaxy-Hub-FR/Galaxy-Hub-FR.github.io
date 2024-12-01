@@ -3,10 +3,10 @@ const validCodes = {
     "458554": { cheatName: "Spoofer", isActive: true, usesLeft: 1 },
     "863846": { cheatName: "GalaxyBoostFR", isActive: true, usesLeft: 3 },
     "784250": { cheatName: "ValorantMod", isActive: false, usesLeft: 0 }, // Désactivé
-    "745787": { cheatName: "GalaxyActivateur", isActive: true, usesLeft: 5 }
+    "745787": { cheatName: "Galaxy_activateur", isActive: true, usesLeft: 5 }
 };
 
-// Gestion des événements pour afficher le modal
+// Gestion des événements pour afficher le modal uniquement sur clic d'un bouton
 document.querySelectorAll('.download-btn').forEach(button => {
     const cheat = button.getAttribute('data-cheat');
 
@@ -91,4 +91,42 @@ document.addEventListener('keydown', function (event) {
     if (event.key === "Escape" && modal.classList.contains('show')) {
         closeModal();
     }
+});
+
+// Désactiver le clic droit
+document.addEventListener('contextmenu', (event) => {
+    event.preventDefault();
+});
+
+// Désactiver les raccourcis clavier liés aux outils de développement
+document.addEventListener('keydown', (event) => {
+    // Désactiver F12
+    if (event.key === "F12") {
+        event.preventDefault();
+    }
+
+    // Désactiver Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+    if (
+        (event.ctrlKey && event.shiftKey && (event.key === "I" || event.key === "J")) || // DevTools (Inspecter/Console)
+        (event.ctrlKey && event.key === "U") // Afficher la source
+    ) {
+        event.preventDefault();
+    }
+});
+
+// Bloquer l'inspection via le clic prolongé sur la page
+let clickHold = false;
+
+document.addEventListener('mousedown', () => {
+    clickHold = true;
+    setTimeout(() => {
+        if (clickHold) {
+            alert("L'inspection est désactivée sur ce site.");
+            clickHold = false;
+        }
+    }, 1000); // Si la souris est maintenue pendant plus de 1 seconde
+});
+
+document.addEventListener('mouseup', () => {
+    clickHold = false;
 });
