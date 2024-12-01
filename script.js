@@ -1,10 +1,18 @@
-// Codes valides pour chaque cheat avec un état et un nombre d'utilisations
-const validCodes = {
+// Initialisation des données avec sauvegarde locale
+const initialValidCodes = {
     "458554": { cheatName: "Spoofer", isActive: true, usesLeft: 1 },
     "863846": { cheatName: "GalaxyBoostFR", isActive: true, usesLeft: 3 },
     "784250": { cheatName: "ValorantMod", isActive: false, usesLeft: 0 }, // Désactivé
     "745787": { cheatName: "Galaxy_activateur", isActive: true, usesLeft: 5 }
 };
+
+// Charger les données depuis LocalStorage ou utiliser les données par défaut
+let validCodes = JSON.parse(localStorage.getItem('validCodes')) || initialValidCodes;
+
+// Sauvegarder les données dans LocalStorage
+function saveCodesToLocalStorage() {
+    localStorage.setItem('validCodes', JSON.stringify(validCodes));
+}
 
 // Gestion des événements pour afficher le modal uniquement sur clic d'un bouton
 document.querySelectorAll('.download-btn').forEach(button => {
@@ -46,6 +54,12 @@ document.getElementById('verifyCodeBtn').addEventListener('click', function () {
             codeData.isActive = false;
         }
 
+        // Mettre à jour le bouton associé au cheat
+        updateCheatButtons();
+
+        // Sauvegarder l'état mis à jour
+        saveCodesToLocalStorage();
+
         closeModal();
     } else if (codeData && codeData.usesLeft === 0) {
         // Code utilisé mais plus disponible
@@ -77,6 +91,23 @@ function isCheatEnabled(cheatName) {
     return Object.values(validCodes).some(code => code.cheatName === cheatName && code.isActive);
 }
 
+// Mettre à jour l'état des boutons en fonction de l'état des cheats
+function updateCheatButtons() {
+    document.querySelectorAll('.download-btn').forEach(button => {
+        const cheat = button.getAttribute('data-cheat');
+        if (!isCheatEnabled(cheat)) {
+            button.disabled = true;
+            button.textContent = "Indisponible";
+        }
+    });
+}
+
+// Initialiser l'état des boutons au chargement
+updateCheatButtons();
+
+// Sauvegarder les changements lorsqu'un utilisateur quitte la page
+window.addEventListener('beforeunload', saveCodesToLocalStorage);
+
 // Fermer le modal en cliquant à l'extérieur
 window.addEventListener('click', function (event) {
     const modal = document.getElementById('modal');
@@ -100,16 +131,7 @@ document.addEventListener('contextmenu', (event) => {
 
 // Désactiver les raccourcis clavier liés aux outils de développement
 document.addEventListener('keydown', (event) => {
-    // Désactiver F12
-    if (event.key === "F12") {
-        event.preventDefault();
-    }
-
-    // Désactiver Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
-    if (
-        (event.ctrlKey && event.shiftKey && (event.key === "I" || event.key === "J")) || // DevTools (Inspecter/Console)
-        (event.ctrlKey && event.key === "U") // Afficher la source
-    ) {
+    if (event.key === "F12" || (event.ctrlKey && (event.shiftKey || event.key === "U"))) {
         event.preventDefault();
     }
 });
@@ -124,7 +146,7 @@ document.addEventListener('mousedown', () => {
             alert("L'inspection est désactivée sur ce site.");
             clickHold = false;
         }
-    }, 1000); // Si la souris est maintenue pendant plus de 1 seconde
+    }, 1000);
 });
 
 document.addEventListener('mouseup', () => {
