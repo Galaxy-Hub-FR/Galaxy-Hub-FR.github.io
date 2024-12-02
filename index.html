@@ -3,10 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galaxy Hub</title>
+    <title>Galaxy Hub - Votre Univers de Cheats</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Loader -->
+    <div id="loader">
+        <div class="loading-text">Chargement...</div>
+        <div class="stars"></div>
+    </div>
+
     <!-- Header -->
     <header class="header">
         <div class="logo-container">
@@ -22,37 +30,41 @@
 
     <!-- Contenu principal -->
     <main class="main-content">
-        <h1 class="main-title">Bienvenue sur Galaxy Hub</h1>
-        <p class="description">Choisissez votre cheat et cliquez sur <strong>"Télécharger"</strong> pour commencer.</p>
+        <!-- Titre d'accueil avec animation -->
+        <h1 class="main-title">Bienvenue dans l'Univers de Galaxy Hub</h1>
+        <p class="description">Votre destination pour les cheats et optimisations de jeu. Cliquez sur <strong>"Télécharger"</strong> pour découvrir votre galaxie.</p>
 
         <!-- Section des cheats -->
         <section class="cheats-section">
-            <!-- Cartes de cheats -->
             <div class="cards-container">
                 <div class="card">
                     <h2>Spoofer</h2>
                     <p>Protection anti-bannissement pour vos jeux.</p>
                     <button class="download-btn" data-cheat="Spoofer">Télécharger</button>
                 </div>
-
                 <div class="card">
                     <h2>GalaxyBoostFR</h2>
                     <p>Boostez vos performances avec GalaxyBoostFR.</p>
                     <button class="download-btn" data-cheat="GalaxyBoostFR">Télécharger</button>
                 </div>
-
                 <div class="card">
                     <h2>Valorant Mod Menu</h2>
                     <p>Accédez à un menu Valorant [Crack].</p>
                     <button class="download-btn" data-cheat="ValorantMod">Télécharger</button>
                 </div>
-
                 <div class="card">
                     <h2>Galaxy Activateur</h2>
                     <p>Activez votre Windows ! Facilement et rapidement.</p>
                     <button class="download-btn" data-cheat="GalaxyActivateur">Télécharger</button>
                 </div>
             </div>
+        </section>
+
+        <!-- Section bonus : Explorer plus -->
+        <section class="explore-section">
+            <h2>Explorez l'univers</h2>
+            <p>Découvrez des outils secrets et explorez encore plus de possibilités avec Galaxy Hub.</p>
+            <a href="#hidden-galaxy" class="explore-link">Voir la Surprise 🌌</a>
         </section>
     </main>
 
@@ -71,6 +83,20 @@
         <p>&copy; 2024 Galaxy Hub. Tous droits réservés.</p>
     </footer>
 
-    <script src="script.js"></script>
+    <!-- Script -->
+    <script>
+        // Loader Animation
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            loader.style.opacity = 0;
+            setTimeout(() => loader.remove(), 1000);
+        });
+
+        // Surprise Section Scroll
+        const exploreLink = document.querySelector('.explore-link');
+        exploreLink.addEventListener('click', () => {
+            alert("Surprise ! 🌟 Vous êtes incroyable !");
+        });
+    </script>
 </body>
 </html>
