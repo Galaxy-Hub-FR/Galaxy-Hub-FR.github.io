@@ -76,8 +76,8 @@ header {
 }
 
 .site-logo {
-    max-width: 120px;  /* Réduit la taille du logo du site */
-    height: auto;
+    max-width: 120px; /* Réduire la taille du logo du site */
+    height: auto; /* Garder les proportions */
 }
 
 .header-links {
@@ -87,15 +87,15 @@ header {
 }
 
 .discord-logo {
-    width: 30px;   /* Taille réduite du logo Discord */
+    width: 30px; /* Réduire la taille du logo Discord */
     height: 30px;
     cursor: pointer;
     transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 .discord-logo:hover {
-    transform: scale(1.2); /* Effet d'agrandissement au survol */
-    opacity: 0.8;
+    transform: scale(1.2); /* Agrandissement au survol */
+    opacity: 0.8; /* Effet visuel */
 }
 
 /* Contenu principal */
@@ -158,9 +158,9 @@ header {
 }
 
 .card-logo {
-    max-width: 80px; /* Taille réduite des logos dans les cartes */
-    height: auto;
-    margin-bottom: 15px;
+    max-width: 100px; /* Taille maximale */
+    height: auto; /* Garde les proportions */
+    margin-bottom: 15px; /* Espace avec le texte */
 }
 
 @keyframes glow {
