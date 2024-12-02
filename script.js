@@ -15,9 +15,9 @@ function saveCodesToLocalStorage() {
 }
 
 // Cacher le modal par défaut au chargement
-window.addEventListener('DOMContentLoaded', function() {
+window.addEventListener('DOMContentLoaded', function () {
     const modal = document.getElementById('modal');
-    modal.classList.remove('show'); // Assurez-vous que la classe .show n'est pas présente
+    modal.classList.remove('show'); // Retirer la classe "show"
     modal.setAttribute('aria-hidden', 'true');
 });
 
@@ -61,7 +61,7 @@ document.getElementById('verifyCodeBtn').addEventListener('click', function () {
             codeData.isActive = false;
         }
 
-        // Mettre à jour le bouton associé au cheat
+        // Mettre à jour les boutons associés aux cheats
         updateCheatButtons();
 
         // Sauvegarder l'état mis à jour
@@ -69,10 +69,8 @@ document.getElementById('verifyCodeBtn').addEventListener('click', function () {
 
         closeModal(); // Fermer le modal après vérification
     } else if (codeData && codeData.usesLeft === 0) {
-        // Code utilisé mais plus disponible
         alert("Ce code a atteint sa limite d'utilisations.");
     } else {
-        // Code invalide
         alert("Code incorrect. Veuillez réessayer.");
     }
 });
@@ -105,6 +103,9 @@ function updateCheatButtons() {
         if (!isCheatEnabled(cheat)) {
             button.disabled = true;
             button.textContent = "Indisponible";
+        } else {
+            button.disabled = false;
+            button.textContent = "Télécharger";
         }
     });
 }
