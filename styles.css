@@ -1,13 +1,14 @@
 /* Variables CSS pour les couleurs */
 :root {
-    --primary-color: #4facfe; /* Bleu dégradé galaxie */
-    --secondary-color: #b0b9c3; /* Gris clair et moderne */
-    --background-overlay: rgba(15, 15, 25, 0.85); /* Couleur de l'espace */
-    --header-background: rgba(20, 20, 40, 0.9);
-    --highlight-color: #ff6ec7; /* Rose nébuleuse */
-    --button-color: #576cff; /* Bleu lumineux */
-    --modal-background: #1a1a2e; /* Fond sombre élégant */
-    --star-color: #ffffff; /* Couleur des étoiles */
+    --primary-color: #ff3e3e; /* Rouge Noël */
+    --secondary-color: #28a745; /* Vert sapin */
+    --background-overlay: rgba(255, 255, 255, 0.8); /* Effet neige */
+    --header-background: rgba(0, 0, 0, 0.7); /* Fond transparent pour header */
+    --highlight-color: #ffcc00; /* Jaune doré étoilé */
+    --button-color: #ff6f61; /* Rouge vif pour les boutons */
+    --modal-background: #f8f9fa; /* Fond clair pour les modaux */
+    --snow-color: #ffffff; /* Blanc pour les flocons de neige */
+    --text-color: #2b2b2b; /* Noir doux pour le texte */
 }
 
 /* Global Styles */
@@ -20,14 +21,14 @@
 
 body {
     font-family: 'Roboto', sans-serif;
-    background: linear-gradient(135deg, #0f0f23, #1a1a35), url('images/background.jpg') no-repeat center center fixed;
+    background: linear-gradient(135deg, #ffefe6, #ffe0d6), url('images/christmas-bg.jpg') no-repeat center center fixed;
     background-size: cover;
-    color: #eaeaea;
+    color: var(--text-color);
     height: 100vh;
     overflow: auto;
 }
 
-/* Animation d'étoiles sur tout le fond */
+/* Animation des flocons de neige */
 body::before {
     content: "";
     position: fixed;
@@ -38,16 +39,16 @@ body::before {
     background: transparent;
     z-index: -1;
     pointer-events: none;
-    animation: stars-move 30s linear infinite;
+    animation: snowfall 10s linear infinite;
 }
 
-@keyframes stars-move {
-    from {
-        background: radial-gradient(circle, var(--star-color) 2px, transparent 2px) 0px 0px,
-                    radial-gradient(circle, var(--star-color) 1px, transparent 1px) 20px 20px;
+@keyframes snowfall {
+    0% {
+        background: radial-gradient(circle, var(--snow-color) 3px, transparent 3px) 0px 0px,
+                    radial-gradient(circle, var(--snow-color) 2px, transparent 2px) 50px 50px;
     }
-    to {
-        background-position: 100% 100%;
+    100% {
+        background-position: 0px 100%;
     }
 }
 
@@ -75,22 +76,13 @@ header {
 .logo {
     max-width: 80px;
     height: auto;
-    animation: logo-spin 5s linear infinite;
-}
-
-@keyframes logo-spin {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
 }
 
 .site-name {
     font-size: 1.8rem;
     color: var(--primary-color);
     font-weight: bold;
+    text-shadow: 0 0 10px var(--highlight-color);
 }
 
 .discord-icon {
@@ -113,6 +105,16 @@ header {
     font-weight: bold;
     color: var(--primary-color);
     text-shadow: 0 0 15px var(--highlight-color);
+    animation: glow 3s infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 10px var(--highlight-color);
+    }
+    to {
+        text-shadow: 0 0 20px var(--highlight-color);
+    }
 }
 
 .description {
@@ -133,8 +135,8 @@ header {
 }
 
 .card {
-    background: rgba(20, 20, 40, 0.9);
-    border: 1px solid var(--primary-color);
+    background: var(--modal-background);
+    border: 2px solid var(--secondary-color);
     border-radius: 15px;
     padding: 20px;
     text-align: center;
@@ -145,40 +147,19 @@ header {
 
 .card:hover {
     transform: scale(1.05);
-    box-shadow: 0 0 20px var(--primary-color);
+    box-shadow: 0 0 15px var(--primary-color);
 }
 
 .card h2 {
-    color: var(--highlight-color);
+    color: var(--secondary-color);
     font-size: 1.8rem;
     margin-bottom: 10px;
-    text-shadow: 0 0 10px var(--highlight-color);
+    text-shadow: 0 0 10px var(--secondary-color);
 }
 
 .card p {
-    color: var(--secondary-color);
+    color: var(--text-color);
     font-size: 1rem;
-}
-
-.card::before {
-    content: "";
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, transparent, var(--highlight-color) 30%, transparent);
-    z-index: -1;
-    animation: glow 4s infinite;
-}
-
-@keyframes glow {
-    0%, 100% {
-        transform: scale(1.1);
-    }
-    50% {
-        transform: scale(0.9);
-    }
 }
 
 .download-btn {
@@ -214,7 +195,7 @@ header {
 }
 
 .explore-link:hover {
-    background: var(--primary-color);
+    background: var(--secondary-color);
     transform: scale(1.1);
 }
 
@@ -234,7 +215,7 @@ header {
 
 .modal-content {
     text-align: center;
-    color: var(--secondary-color);
+    color: var(--text-color);
 }
 
 .modal-content h2 {
