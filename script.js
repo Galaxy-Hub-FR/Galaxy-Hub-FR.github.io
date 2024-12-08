@@ -3,7 +3,7 @@ const initialValidCodes = {
     "458554": { cheatName: "Spoofer", isActive: true, usesLeft: 1 },
     "863846": { cheatName: "GalaxyBoostFR", isActive: true, usesLeft: 3 },
     "784250": { cheatName: "ValorantMod", isActive: false, usesLeft: 0 }, // Désactivé
-    "745787": { cheatName: "Galaxy_activateur", isActive: true, usesLeft: 5 }
+    "745787": { cheatName: "GalaxyActivateur", isActive: true, usesLeft: 5 }
 };
 
 // Charger les données depuis LocalStorage ou utiliser les données par défaut
@@ -17,7 +17,7 @@ function saveCodesToLocalStorage() {
 // Cacher le modal par défaut au chargement
 window.addEventListener('DOMContentLoaded', function () {
     const modal = document.getElementById('modal');
-    modal.classList.remove('show'); // Retirer la classe "show"
+    modal.classList.remove('show');
     modal.setAttribute('aria-hidden', 'true');
 });
 
@@ -27,8 +27,9 @@ document.querySelectorAll('.download-btn').forEach(button => {
 
     // Vérifier si le cheat est actif
     if (!isCheatEnabled(cheat)) {
-        button.disabled = true; // Désactiver le bouton
-        button.textContent = "Indisponible"; // Changer le texte du bouton
+        button.disabled = true;
+        button.textContent = "Indisponible";
+        button.classList.add('disabled-btn'); // Classe pour le style désactivé
     }
 
     button.addEventListener('click', function () {
@@ -86,8 +87,8 @@ function triggerDownload(cheat) {
 // Fonction pour fermer le modal
 function closeModal() {
     const modal = document.getElementById('modal');
-    modal.classList.remove('show'); // Cacher le modal
-    modal.setAttribute('aria-hidden', 'true'); // Mettre à jour l'attribut aria
+    modal.classList.remove('show');
+    modal.setAttribute('aria-hidden', 'true');
     document.getElementById('codeInput').value = ""; // Réinitialiser le champ
 }
 
@@ -103,9 +104,11 @@ function updateCheatButtons() {
         if (!isCheatEnabled(cheat)) {
             button.disabled = true;
             button.textContent = "Indisponible";
+            button.classList.add('disabled-btn'); // Ajouter une classe CSS pour les boutons désactivés
         } else {
             button.disabled = false;
             button.textContent = "Télécharger";
+            button.classList.remove('disabled-btn'); // Retirer la classe si activé
         }
     });
 }
