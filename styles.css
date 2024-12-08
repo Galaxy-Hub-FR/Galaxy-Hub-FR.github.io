@@ -24,31 +24,9 @@ body {
     background-size: cover;
     color: #eaeaea;
     height: 100vh;
-    overflow: hidden;
-    overflow-y: auto;
-    position: relative;
+    overflow: auto;
 }
 
-body::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url('images/stars.png') repeat;
-    opacity: 0.2;
-    animation: twinkle 20s infinite linear;
-    z-index: 1;
-}
-
-/* Effet de ciel étoilé */
-@keyframes twinkle {
-    0%, 100% { transform: translate(0, 0); }
-    50% { transform: translate(-50px, -50px); }
-}
-
-/* Header */
 header {
     position: fixed;
     top: 0;
@@ -61,76 +39,57 @@ header {
     align-items: center;
     z-index: 1000;
     backdrop-filter: blur(10px);
-    animation: fadeInSlide 1s ease-out;
 }
 
-@keyframes fadeInSlide {
-    0% { opacity: 0; transform: translateY(-20px); }
-    100% { opacity: 1; transform: translateY(0); }
-}
-
-/* Logos dans l'en-tête */
 .logo-container {
     display: flex;
     align-items: center;
+    gap: 10px;
 }
 
-.site-logo {
-    max-width: 80px; /* Taille réduite du logo du site */
-    height: auto; /* Garder les proportions */
+.logo {
+    max-width: 80px; /* Taille réduite pour le logo principal */
+    height: auto;
 }
 
-.header-links {
-    display: flex;
-    align-items: center;
-    gap: 8px; /* Espace entre les éléments */
-}
-
-.discord-logo {
-    width: 20px; /* Taille réduite du logo Discord */
-    height: 20px;
-    cursor: pointer;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-}
-
-.discord-logo:hover {
-    transform: scale(1.2); /* Agrandissement au survol */
-    opacity: 0.8; /* Effet visuel */
-}
-
-/* Contenu principal */
-.content {
-    margin-top: 100px;
-    z-index: 2;
-    text-align: center;
-    color: #fff;
-    animation: fadeIn 1.5s ease-out;
-}
-
-/* Effet de pulsation sur le titre principal */
-.main-title {
-    font-size: 2.5rem; /* Taille ajustée pour s'harmoniser avec les logos réduits */
+.site-name {
+    font-size: 1.5rem;
+    color: var(--primary-color);
     font-weight: bold;
-    background: linear-gradient(90deg, #4facfe, #00f2fe, #6a82fb);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 20px;
-    animation: pulse 2s infinite ease-in-out;
 }
 
-@keyframes pulse {
-    0%, 100% { text-shadow: 0 0 5px var(--highlight-color), 0 0 20px var(--primary-color); }
-    50% { text-shadow: 0 0 15px var(--highlight-color), 0 0 30px var(--primary-color); }
+.discord-icon {
+    width: 40px; /* Taille réduite pour l'icône Discord */
+    height: auto;
+    cursor: pointer;
+    transition: transform 0.3s ease;
 }
 
-/* Cartes des téléchargements */
+.discord-icon:hover {
+    transform: scale(1.1);
+}
+
+.main-title {
+    text-align: center;
+    margin-top: 120px;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    text-shadow: 0 0 10px var(--highlight-color);
+}
+
+.description {
+    text-align: center;
+    font-size: 1.2rem;
+    color: var(--secondary-color);
+    margin-top: 10px;
+}
+
 .cards-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 20px;
-    padding: 20px;
-    justify-items: center;
-    position: relative;
+    margin: 40px 20px;
 }
 
 .card {
@@ -138,49 +97,64 @@ header {
     border: 1px solid var(--primary-color);
     border-radius: 15px;
     padding: 20px;
-    width: 100%;
-    max-width: 300px;
     text-align: center;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.6);
-    position: relative;
-    overflow: hidden;
+    transition: transform 0.3s ease;
 }
 
-.card:hover::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent);
-    animation: glow 1.5s infinite;
+.card:hover {
+    transform: scale(1.05);
 }
 
-.card-logo {
-    max-width: 80px; /* Taille réduite des logos des cartes */
-    height: auto; /* Garde les proportions */
-    margin-bottom: 15px; /* Espace avec le texte */
-}
-
-@keyframes glow {
-    0%, 100% { transform: scale(1); opacity: 0.3; }
-    50% { transform: scale(1.5); opacity: 0.6; }
-}
-
-/* Boutons animés */
-.card .download-btn {
+.download-btn {
     background: var(--button-color);
-    color: white;
-    font-size: 1rem;
-    padding: 10px 20px;
+    color: #fff;
     border: none;
+    padding: 10px 20px;
     border-radius: 25px;
     cursor: pointer;
-    animation: bounce 2s infinite ease-in-out;
+    font-size: 1rem;
+    margin-top: 10px;
 }
 
-@keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+.download-btn:hover {
+    background: var(--highlight-color);
+}
+
+.explore-link {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: var(--highlight-color);
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    transition: background 0.3s ease;
+}
+
+.explore-link:hover {
+    background: var(--primary-color);
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--modal-background);
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 10000;
+}
+
+.modal-content {
+    text-align: center;
+}
+
+footer {
+    text-align: center;
+    margin-top: 20px;
+    padding: 10px;
+    background: var(--header-background);
+    color: var(--secondary-color);
 }
