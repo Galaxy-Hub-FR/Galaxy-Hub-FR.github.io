@@ -27,6 +27,31 @@ body {
     overflow: auto;
 }
 
+/* Animation d'étoiles sur tout le fond */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    z-index: -1;
+    pointer-events: none;
+    animation: stars-move 30s linear infinite;
+}
+
+@keyframes stars-move {
+    from {
+        background: radial-gradient(circle, var(--star-color) 2px, transparent 2px) 0px 0px,
+                    radial-gradient(circle, var(--star-color) 1px, transparent 1px) 20px 20px;
+    }
+    to {
+        background-position: 100% 100%;
+    }
+}
+
+/* Header */
 header {
     position: fixed;
     top: 0;
@@ -48,41 +73,56 @@ header {
 }
 
 .logo {
-    max-width: 80px; /* Taille réduite pour le logo principal */
+    max-width: 80px;
     height: auto;
+    animation: logo-spin 5s linear infinite;
+}
+
+@keyframes logo-spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .site-name {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     color: var(--primary-color);
     font-weight: bold;
 }
 
 .discord-icon {
-    width: 40px; /* Taille réduite pour l'icône Discord */
+    width: 40px;
     height: auto;
     cursor: pointer;
     transition: transform 0.3s ease;
 }
 
 .discord-icon:hover {
-    transform: scale(1.1);
+    transform: scale(1.2);
+    filter: drop-shadow(0px 0px 10px var(--highlight-color));
 }
 
+/* Main Content */
 .main-title {
     text-align: center;
     margin-top: 120px;
-    font-size: 2.5rem;
+    font-size: 3rem;
     font-weight: bold;
     color: var(--primary-color);
-    text-shadow: 0 0 10px var(--highlight-color);
+    text-shadow: 0 0 15px var(--highlight-color);
 }
 
 .description {
     text-align: center;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     color: var(--secondary-color);
     margin-top: 10px;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .cards-container {
@@ -98,11 +138,47 @@ header {
     border-radius: 15px;
     padding: 20px;
     text-align: center;
+    position: relative;
+    overflow: hidden;
     transition: transform 0.3s ease;
 }
 
 .card:hover {
     transform: scale(1.05);
+    box-shadow: 0 0 20px var(--primary-color);
+}
+
+.card h2 {
+    color: var(--highlight-color);
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    text-shadow: 0 0 10px var(--highlight-color);
+}
+
+.card p {
+    color: var(--secondary-color);
+    font-size: 1rem;
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, transparent, var(--highlight-color) 30%, transparent);
+    z-index: -1;
+    animation: glow 4s infinite;
+}
+
+@keyframes glow {
+    0%, 100% {
+        transform: scale(1.1);
+    }
+    50% {
+        transform: scale(0.9);
+    }
 }
 
 .download-btn {
@@ -114,27 +190,35 @@ header {
     cursor: pointer;
     font-size: 1rem;
     margin-top: 10px;
+    transition: background 0.3s ease, transform 0.2s;
 }
 
 .download-btn:hover {
     background: var(--highlight-color);
+    transform: translateY(-5px);
+    box-shadow: 0 0 15px var(--highlight-color);
 }
 
+/* Section d'exploration */
 .explore-link {
     display: inline-block;
     margin-top: 20px;
-    padding: 10px 20px;
+    padding: 12px 25px;
     background: var(--highlight-color);
     color: white;
     text-decoration: none;
-    border-radius: 25px;
-    transition: background 0.3s ease;
+    font-size: 1.2rem;
+    border-radius: 30px;
+    text-shadow: 0 0 10px var(--highlight-color);
+    transition: transform 0.3s ease, background 0.3s ease;
 }
 
 .explore-link:hover {
     background: var(--primary-color);
+    transform: scale(1.1);
 }
 
+/* Modal */
 .modal {
     display: none;
     position: fixed;
@@ -145,16 +229,26 @@ header {
     padding: 20px;
     border-radius: 10px;
     z-index: 10000;
+    box-shadow: 0 0 30px var(--highlight-color);
 }
 
 .modal-content {
     text-align: center;
+    color: var(--secondary-color);
 }
 
+.modal-content h2 {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+/* Footer */
 footer {
     text-align: center;
-    margin-top: 20px;
-    padding: 10px;
+    margin-top: 40px;
+    padding: 15px;
     background: var(--header-background);
     color: var(--secondary-color);
+    font-size: 0.9rem;
 }
