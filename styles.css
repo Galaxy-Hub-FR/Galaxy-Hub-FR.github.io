@@ -1,4 +1,35 @@
-/* Animation de l'arrière-plan - chiffres en cascade */
+/* Variables CSS */
+:root {
+    --primary-color: #1effd7; /* Vert néon */
+    --secondary-color: #2e2e2e; /* Gris sombre */
+    --highlight-color: #ffffff; /* Blanc éclatant */
+    --background-color: #1b1b1b; /* Noir profond */
+    --modal-background: rgba(20, 20, 20, 0.95); /* Noir translucide */
+    --button-color: #34ebba; /* Vert lumineux */
+    --text-color: #dcdcdc; /* Gris clair */
+    --card-shadow: rgba(30, 255, 215, 0.4); /* Ombre verte éclatante */
+    --border-color: #007c70; /* Vert plus foncé pour les bordures */
+}
+
+/* Style Global */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: all 0.3s ease-in-out;
+}
+
+body {
+    font-family: 'Roboto Mono', monospace;
+    background: var(--background-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Animation dynamique de l'arrière-plan */
 body::before {
     content: "";
     position: fixed;
@@ -7,49 +38,243 @@ body::before {
     width: 100%;
     height: 100%;
     z-index: -1;
-    background: var(--background-color);
-    overflow: hidden;
+    background: radial-gradient(circle, rgba(0, 255, 200, 0.2) 20%, transparent 20%) 0 0,
+                radial-gradient(circle, rgba(0, 255, 200, 0.15) 20%, transparent 20%) 50px 50px;
+    background-size: 100px 100px;
+    animation: hacker-glow 6s linear infinite;
 }
 
-body::after {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    background: repeating-linear-gradient(
-        transparent 0px,
-        transparent 10px,
-        rgba(30, 255, 215, 0.1) 11px
-    );
-}
-
-/* Génération des chiffres */
-@keyframes hacker-numbers {
+@keyframes hacker-glow {
     0% {
         transform: translateY(0);
     }
     100% {
-        transform: translateY(100%);
+        transform: translateY(200%);
     }
 }
 
+/* Chiffres dynamiques en arrière-plan */
 .number {
-    position: absolute;
-    font-family: 'Roboto Mono', monospace;
-    font-size: 14px;
-    color: rgba(30, 255, 215, 0.2);
-    animation: hacker-numbers 8s linear infinite;
-    will-change: transform;
+    position: fixed;
+    top: -50px;
+    font-size: 1.5rem;
+    color: rgba(0, 255, 200, 0.8);
+    animation: fall infinite linear;
+    z-index: -1;
 }
 
-.number:nth-child(even) {
-    animation-duration: 10s;
+@keyframes fall {
+    to {
+        transform: translateY(120vh);
+    }
 }
 
-.number:nth-child(odd) {
-    animation-duration: 12s;
-    color: rgba(30, 255, 215, 0.15);
+/* Header */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: var(--secondary-color);
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    border-bottom: 2px solid var(--border-color);
+    backdrop-filter: blur(10px);
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo {
+    max-width: 90px;
+    height: auto;
+}
+
+.site-name {
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    text-shadow: 0 0 15px var(--primary-color);
+}
+
+.discord-icon {
+    width: 40px;
+    cursor: pointer;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.discord-icon:hover {
+    transform: scale(1.2);
+    filter: brightness(1.5);
+}
+
+/* Titre principal */
+.main-title {
+    text-align: center;
+    margin-top: 120px;
+    font-size: 3rem;
+    color: var(--primary-color);
+    text-shadow: 0 0 20px var(--primary-color);
+    animation: glow-effect 2s infinite alternate;
+}
+
+@keyframes glow-effect {
+    from {
+        text-shadow: 0 0 15px var(--primary-color);
+    }
+    to {
+        text-shadow: 0 0 35px var(--primary-color);
+    }
+}
+
+/* Section de description */
+.description {
+    text-align: center;
+    font-size: 1.2rem;
+    color: var(--text-color);
+    margin-top: 15px;
+}
+
+/* Cards de contenu */
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 40px 20px;
+    margin-top: 50px;
+}
+
+.card {
+    background: var(--secondary-color);
+    border: 1px solid var(--border-color);
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 5px 15px var(--card-shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px var(--card-shadow);
+}
+
+.card h2 {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+}
+
+.card p {
+    color: var(--text-color);
+    font-size: 1rem;
+    margin-top: 10px;
+}
+
+/* Boutons de téléchargement */
+.download-btn {
+    background: var(--button-color);
+    color: var(--highlight-color);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s ease, transform 0.3s ease;
+    margin-top: 15px;
+}
+
+.download-btn:hover {
+    background: var(--primary-color);
+    transform: translateY(-3px);
+    box-shadow: 0 0 15px var(--primary-color);
+}
+
+.disabled-btn {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Lien "Explorer" */
+.explore-link {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 25px;
+    background: var(--button-color);
+    color: var(--highlight-color);
+    text-decoration: none;
+    border-radius: 30px;
+    text-shadow: 0 0 10px var(--primary-color);
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.explore-link:hover {
+    transform: scale(1.1);
+    background: var(--primary-color);
+}
+
+/* Modale */
+.modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--modal-background);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px var(--primary-color);
+    z-index: 1000;
+}
+
+.modal.show {
+    display: block;
+}
+
+.modal-content {
+    text-align: center;
+    color: var(--text-color);
+}
+
+.modal-content h2 {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+}
+
+.modal-content input {
+    width: 80%;
+    padding: 10px;
+    margin-top: 15px;
+    border-radius: 25px;
+    border: 1px solid var(--border-color);
+    background: var(--secondary-color);
+    color: var(--text-color);
+}
+
+.modal-content button {
+    background: var(--button-color);
+    color: var(--highlight-color);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+.modal-content button:hover {
+    background: var(--primary-color);
+}
+
+/* Pied de page */
+footer {
+    text-align: center;
+    padding: 20px;
+    background: var(--secondary-color);
+    color: var(--text-color);
+    margin-top: 50px;
+    border-top: 2px solid var(--border-color);
 }
