@@ -1,12 +1,12 @@
-// Initialisation des données avec sauvegarde locale
+// === Initialisation des données et des codes dynamiques ===
 const initialValidCodes = {
-    "458554": { cheatName: "Spoofer", isActive: true, usesLeft: 1 },
-    "863846": { cheatName: "GalaxyBoostFR", isActive: true, usesLeft: 3 },
-    "784250": { cheatName: "ValorantMod", isActive: false, usesLeft: 0 }, // Désactivé
-    "745787": { cheatName: "GalaxyActivateur", isActive: true, usesLeft: 5 }
+    "458554": generateCode("Spoofer", 1),
+    "863846": generateCode("GalaxyBoostFR", 3),
+    "784250": generateCode("ValorantMod", 0), // Désactivé
+    "745787": generateCode("GalaxyActivateur", 5)
 };
 
-// Charger les données depuis LocalStorage ou utiliser les données par défaut
+// Charger les données depuis LocalStorage ou utiliser les données initiales
 let validCodes = JSON.parse(localStorage.getItem('validCodes')) || initialValidCodes;
 
 // Sauvegarder les données dans LocalStorage
@@ -14,29 +14,52 @@ function saveCodesToLocalStorage() {
     localStorage.setItem('validCodes', JSON.stringify(validCodes));
 }
 
-// Cacher le modal par défaut au chargement
+// Générer un code unique avec durée de vie et nombre d'utilisations
+function generateCode(cheatName, uses, expirationInHours = 24) {
+    const code = Math.random().toString(36).substring(2, 10).toUpperCase(); // Code unique
+    const expirationTime = Date.now() + expirationInHours * 60 * 60 * 1000; // Durée en ms
+    return {
+        cheatName,
+        isActive: true,
+        usesLeft: uses,
+        expirationTime
+    };
+}
+
+// Vérifier si un code est valide
+function isValidCode(code) {
+    const codeData = validCodes[code];
+    if (!codeData) return false;
+
+    const isExpired = Date.now() > codeData.expirationTime;
+    if (isExpired) {
+        codeData.isActive = false;
+        saveCodesToLocalStorage();
+        return false;
+    }
+    return codeData.isActive && codeData.usesLeft > 0;
+}
+
+// === Gestion du Modal ===
 window.addEventListener('DOMContentLoaded', function () {
     const modal = document.getElementById('modal');
     modal.classList.remove('show');
     modal.setAttribute('aria-hidden', 'true');
 });
 
-// Gestion des événements pour afficher le modal uniquement sur clic d'un bouton
+// Affichage du modal
 document.querySelectorAll('.download-btn').forEach(button => {
     const cheat = button.getAttribute('data-cheat');
 
-    // Vérifier si le cheat est actif
     if (!isCheatEnabled(cheat)) {
         button.disabled = true;
         button.textContent = "Indisponible";
-        button.classList.add('disabled-btn'); // Classe pour le style désactivé
+        button.classList.add('disabled-btn');
     }
 
     button.addEventListener('click', function () {
         const modal = document.getElementById('modal');
         const cheatTitle = document.getElementById('modalCheatTitle');
-
-        // Mettre à jour le titre et afficher le modal
         cheatTitle.textContent = cheat;
         modal.classList.add('show');
         modal.setAttribute('aria-hidden', 'false');
@@ -44,52 +67,45 @@ document.querySelectorAll('.download-btn').forEach(button => {
     });
 });
 
-// Vérification du code d'accès
+// Vérification d'un code d'accès
 document.getElementById('verifyCodeBtn').addEventListener('click', function () {
     const enteredCode = document.getElementById('codeInput').value.trim();
     const codeData = validCodes[enteredCode];
 
-    if (codeData && codeData.isActive && codeData.usesLeft > 0) {
-        // Code valide
+    if (isValidCode(enteredCode)) {
         alert(`Code correct ! Téléchargement de ${codeData.cheatName} débloqué.`);
         triggerDownload(codeData.cheatName);
 
-        // Réduire le nombre d'utilisations restantes
+        // Réduire les utilisations et désactiver le code si nécessaire
         codeData.usesLeft--;
-
-        // Désactiver le code s'il n'a plus d'utilisations
         if (codeData.usesLeft <= 0) {
             codeData.isActive = false;
         }
 
-        // Mettre à jour les boutons associés aux cheats
         updateCheatButtons();
-
-        // Sauvegarder l'état mis à jour
         saveCodesToLocalStorage();
-
-        closeModal(); // Fermer le modal après vérification
+        closeModal();
     } else if (codeData && codeData.usesLeft === 0) {
         alert("Ce code a atteint sa limite d'utilisations.");
     } else {
-        alert("Code incorrect. Veuillez réessayer.");
+        alert("Code incorrect ou expiré. Veuillez réessayer.");
     }
 });
 
-// Fonction pour déclencher un téléchargement
+// Téléchargement du fichier
 function triggerDownload(cheat) {
     const link = document.createElement('a');
-    link.href = `downloads/${cheat}.rar`; // Chemin du fichier
-    link.download = `${cheat}.rar`; // Nom du fichier
-    link.click(); // Simuler le clic pour télécharger
+    link.href = `downloads/${cheat}.rar`;
+    link.download = `${cheat}.rar`;
+    link.click();
 }
 
-// Fonction pour fermer le modal
+// Fermer le modal
 function closeModal() {
     const modal = document.getElementById('modal');
     modal.classList.remove('show');
     modal.setAttribute('aria-hidden', 'true');
-    document.getElementById('codeInput').value = ""; // Réinitialiser le champ
+    document.getElementById('codeInput').value = "";
 }
 
 // Vérifier si un cheat est activé
@@ -97,26 +113,23 @@ function isCheatEnabled(cheatName) {
     return Object.values(validCodes).some(code => code.cheatName === cheatName && code.isActive);
 }
 
-// Mettre à jour l'état des boutons en fonction de l'état des cheats
+// Mettre à jour l'état des boutons en fonction des cheats
 function updateCheatButtons() {
     document.querySelectorAll('.download-btn').forEach(button => {
         const cheat = button.getAttribute('data-cheat');
         if (!isCheatEnabled(cheat)) {
             button.disabled = true;
             button.textContent = "Indisponible";
-            button.classList.add('disabled-btn'); // Ajouter une classe CSS pour les boutons désactivés
+            button.classList.add('disabled-btn');
         } else {
             button.disabled = false;
             button.textContent = "Télécharger";
-            button.classList.remove('disabled-btn'); // Retirer la classe si activé
+            button.classList.remove('disabled-btn');
         }
     });
 }
 
-// Initialiser l'état des boutons au chargement
-updateCheatButtons();
-
-// Sauvegarder les changements lorsqu'un utilisateur quitte la page
+// Sauvegarde des données avant de quitter la page
 window.addEventListener('beforeunload', saveCodesToLocalStorage);
 
 // Fermer le modal en cliquant à l'extérieur
@@ -127,10 +140,13 @@ window.addEventListener('click', function (event) {
     }
 });
 
-// Ajouter un écouteur pour la touche "Échap" pour fermer le modal
+// Fermer le modal avec "Escape"
 document.addEventListener('keydown', function (event) {
     const modal = document.getElementById('modal');
     if (event.key === "Escape" && modal.classList.contains('show')) {
         closeModal();
     }
 });
+
+// === Initialiser ===
+updateCheatButtons();
