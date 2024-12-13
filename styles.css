@@ -1,18 +1,17 @@
-/* Variables CSS pour les couleurs */
+/* Variables CSS */
 :root {
-    --primary-color: #2a7dff; /* Bleu royal Noël */
-    --secondary-color: #b3d8f2; /* Bleu pâle */
-    --highlight-color: #ffffff; /* Blanc lumineux */
-    --background-overlay: rgba(0, 0, 50, 0.7); /* Ombre bleutée douce */
-    --header-background: rgba(25, 30, 60, 0.85); /* Bleu nuit élégant */
-    --button-color: #33c8ff; /* Bleu éclatant */
-    --modal-background: rgba(30, 30, 50, 0.95); /* Fond modal festif */
-    --snow-color: #ffffff; /* Blanc neige */
-    --text-color: #f5f5f5; /* Gris clair moderne */
-    --card-shadow: rgba(0, 105, 255, 0.4); /* Ombre bleutée douce */
+    --primary-color: #1effd7; /* Vert néon */
+    --secondary-color: #2e2e2e; /* Gris sombre */
+    --highlight-color: #ffffff; /* Blanc éclatant */
+    --background-color: #1b1b1b; /* Noir profond */
+    --modal-background: rgba(20, 20, 20, 0.95); /* Noir translucide */
+    --button-color: #34ebba; /* Vert lumineux */
+    --text-color: #dcdcdc; /* Gris clair */
+    --card-shadow: rgba(30, 255, 215, 0.4); /* Ombre verte éclatante */
+    --border-color: #007c70; /* Vert plus foncé pour les bordures */
 }
 
-/* Global Styles */
+/* Style Global */
 * {
     margin: 0;
     padding: 0;
@@ -21,16 +20,16 @@
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
-    background: linear-gradient(135deg, #00b0ff, #5b9eff), url('images/christmas-background.jpg') no-repeat center center fixed;
-    background-size: cover;
+    font-family: 'Roboto Mono', monospace;
+    background: var(--background-color);
     color: var(--text-color);
-    height: 100vh;
-    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
     position: relative;
 }
 
-/* Flocons de neige animés */
+/* Animation dynamique de l'arrière-plan */
 body::before {
     content: "";
     position: fixed;
@@ -39,19 +38,18 @@ body::before {
     width: 100%;
     height: 100%;
     z-index: -1;
-    pointer-events: none;
-    background: radial-gradient(circle, var(--snow-color) 2px, transparent 2px) 0 0,
-                radial-gradient(circle, var(--snow-color) 2px, transparent 2px) 50px 50px;
+    background: radial-gradient(circle, rgba(0, 255, 200, 0.2) 20%, transparent 20%) 0 0,
+                radial-gradient(circle, rgba(0, 255, 200, 0.15) 20%, transparent 20%) 50px 50px;
     background-size: 100px 100px;
-    animation: snowfall 12s linear infinite;
+    animation: hacker-glow 6s linear infinite;
 }
 
-@keyframes snowfall {
+@keyframes hacker-glow {
     0% {
-        transform: translateY(-100%);
+        transform: translateY(0);
     }
     100% {
-        transform: translateY(100%);
+        transform: translateY(200%);
     }
 }
 
@@ -61,14 +59,14 @@ header {
     top: 0;
     left: 0;
     width: 100%;
-    background: var(--header-background);
-    padding: 20px;
+    background: var(--secondary-color);
+    padding: 15px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     z-index: 1000;
-    backdrop-filter: blur(15px);
-    border-bottom: 3px solid var(--highlight-color);
+    border-bottom: 2px solid var(--border-color);
+    backdrop-filter: blur(10px);
 }
 
 .logo-container {
@@ -78,129 +76,127 @@ header {
 }
 
 .logo {
-    max-width: 100px;
+    max-width: 90px;
     height: auto;
 }
 
 .site-name {
-    font-size: 2rem;
-    color: var(--highlight-color);
-    font-weight: bold;
-    letter-spacing: 1px;
-    text-shadow: 0 0 10px var(--highlight-color);
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    text-shadow: 0 0 15px var(--primary-color);
 }
 
 .discord-icon {
-    width: 45px;
-    height: auto;
+    width: 40px;
     cursor: pointer;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, filter 0.3s ease;
 }
 
 .discord-icon:hover {
     transform: scale(1.2);
+    filter: brightness(1.5);
 }
 
-/* Main Content */
+/* Titre principal */
 .main-title {
     text-align: center;
     margin-top: 120px;
     font-size: 3rem;
-    font-weight: bold;
     color: var(--primary-color);
-    text-shadow: 0 0 25px var(--highlight-color);
-    animation: glow 2s infinite alternate;
+    text-shadow: 0 0 20px var(--primary-color);
+    animation: glow-effect 2s infinite alternate;
 }
 
-@keyframes glow {
+@keyframes glow-effect {
     from {
-        text-shadow: 0 0 15px var(--highlight-color);
+        text-shadow: 0 0 15px var(--primary-color);
     }
     to {
-        text-shadow: 0 0 35px var(--highlight-color);
+        text-shadow: 0 0 35px var(--primary-color);
     }
 }
 
+/* Section de description */
 .description {
     text-align: center;
-    font-size: 1.3rem;
-    color: var(--secondary-color);
-    margin-top: 10px;
-    line-height: 1.5;
+    font-size: 1.2rem;
+    color: var(--text-color);
+    margin-top: 15px;
 }
 
-/* Cards Section */
+/* Cards de contenu */
 .cards-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
-    margin: 50px 20px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 40px 20px;
+    margin-top: 50px;
 }
 
 .card {
-    background: rgba(0, 0, 50, 0.85);
-    border: 2px solid var(--primary-color);
-    border-radius: 20px;
-    padding: 25px;
+    background: var(--secondary-color);
+    border: 1px solid var(--border-color);
+    border-radius: 15px;
+    padding: 20px;
     text-align: center;
-    box-shadow: 0 8px 25px var(--card-shadow);
+    box-shadow: 0 5px 15px var(--card-shadow);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card:hover {
-    transform: scale(1.07);
-    box-shadow: 0 12px 30px var(--primary-color);
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px var(--card-shadow);
 }
 
 .card h2 {
-    font-size: 2rem;
+    font-size: 1.5rem;
     color: var(--primary-color);
-    margin-bottom: 15px;
 }
 
 .card p {
     color: var(--text-color);
-    font-size: 1.1rem;
+    font-size: 1rem;
+    margin-top: 10px;
 }
 
+/* Boutons de téléchargement */
 .download-btn {
     background: var(--button-color);
     color: var(--highlight-color);
     border: none;
-    padding: 12px 25px;
-    border-radius: 30px;
+    padding: 10px 20px;
+    border-radius: 25px;
     cursor: pointer;
-    font-size: 1.1rem;
-    margin-top: 15px;
+    font-size: 1rem;
     transition: background 0.3s ease, transform 0.3s ease;
+    margin-top: 15px;
 }
 
 .download-btn:hover {
-    background: var(--highlight-color);
-    transform: translateY(-5px);
-    box-shadow: 0 0 20px var(--highlight-color);
+    background: var(--primary-color);
+    transform: translateY(-3px);
+    box-shadow: 0 0 15px var(--primary-color);
 }
 
-/* Explore Section */
+/* Lien "Explorer" */
 .explore-link {
     display: inline-block;
-    margin-top: 25px;
-    padding: 14px 28px;
-    background: var(--primary-color);
+    margin-top: 20px;
+    padding: 12px 25px;
+    background: var(--button-color);
     color: var(--highlight-color);
     text-decoration: none;
-    font-size: 1.3rem;
-    border-radius: 35px;
-    text-shadow: 0 0 15px var(--highlight-color);
-    transition: background 0.3s ease, transform 0.3s ease;
+    border-radius: 30px;
+    text-shadow: 0 0 10px var(--primary-color);
+    transition: transform 0.3s ease, background 0.3s ease;
 }
 
 .explore-link:hover {
-    background: var(--button-color);
     transform: scale(1.1);
+    background: var(--primary-color);
 }
 
-/* Modal */
+/* Modale */
 .modal {
     display: none;
     position: fixed;
@@ -208,54 +204,52 @@ header {
     left: 50%;
     transform: translate(-50%, -50%);
     background: var(--modal-background);
-    padding: 25px;
-    border-radius: 15px;
-    z-index: 10000;
-    box-shadow: 0 0 25px var(--highlight-color);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px var(--primary-color);
+    z-index: 1000;
 }
 
 .modal-content {
     text-align: center;
+    color: var(--text-color);
 }
 
 .modal-content h2 {
+    font-size: 1.5rem;
     color: var(--primary-color);
-    font-size: 1.8rem;
-    margin-bottom: 15px;
 }
 
 .modal-content input {
+    width: 80%;
     padding: 10px;
-    border-radius: 25px;
-    border: 2px solid var(--primary-color);
-    background: var(--highlight-color);
-    color: var(--primary-color);
-    font-size: 1.1rem;
     margin-top: 15px;
+    border-radius: 25px;
+    border: 1px solid var(--border-color);
+    background: var(--secondary-color);
+    color: var(--text-color);
 }
 
 .modal-content button {
     background: var(--button-color);
     color: var(--highlight-color);
     border: none;
-    padding: 12px 28px;
-    border-radius: 30px;
+    padding: 10px 20px;
+    border-radius: 25px;
     margin-top: 15px;
     cursor: pointer;
-    font-size: 1.1rem;
-    transition: background 0.3s ease;
 }
 
 .modal-content button:hover {
     background: var(--primary-color);
 }
 
-/* Footer */
+/* Pied de page */
 footer {
     text-align: center;
-    margin-top: 40px;
     padding: 20px;
-    background: var(--header-background);
-    color: var(--secondary-color);
-    font-size: 1rem;
+    background: var(--secondary-color);
+    color: var(--text-color);
+    margin-top: 50px;
+    border-top: 2px solid var(--border-color);
 }
