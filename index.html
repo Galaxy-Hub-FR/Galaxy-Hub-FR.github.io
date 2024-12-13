@@ -18,12 +18,12 @@
     <link rel="stylesheet" href="styles.css">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
     <!-- Loader -->
-    <div id="loader">
+    <div id="loader" aria-hidden="true">
         <div class="loading-text">Chargement...</div>
         <div class="stars"></div>
     </div>
@@ -52,6 +52,7 @@
         <!-- Section des cheats -->
         <section class="cheats-section">
             <div class="cards-container">
+                <!-- Cheat Cards -->
                 <div class="card">
                     <h2>Spoofer</h2>
                     <p>Protection anti-bannissement pour vos jeux.</p>
@@ -107,9 +108,26 @@
             setTimeout(() => loader.remove(), 1000);
         });
 
+        // Modal Gestion
+        document.querySelectorAll('.download-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const modal = document.getElementById('modal');
+                const modalTitle = document.getElementById('modalCheatTitle');
+                modalTitle.textContent = `Télécharger : ${button.dataset.cheat}`;
+                modal.style.display = 'block';
+            });
+        });
+
+        // Fermer Modal au clic extérieur
+        window.addEventListener('click', (event) => {
+            const modal = document.getElementById('modal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
         // Surprise Section Scroll
-        const exploreLink = document.querySelector('.explore-link');
-        exploreLink.addEventListener('click', () => {
+        document.querySelector('.explore-link').addEventListener('click', () => {
             alert("Surprise ! 🌟 Vous êtes incroyable !");
         });
     </script>
