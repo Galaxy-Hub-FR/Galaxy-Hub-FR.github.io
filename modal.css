@@ -27,11 +27,15 @@
     z-index: 1000;
     padding: 20px;
     border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Ombre légère pour donner de la profondeur */
+    opacity: 0; /* Initialement invisible pour l'animation */
+    transition: opacity 0.3s ease;
 }
 
 /* Afficher le modal lorsque la classe "show" est ajoutée */
 .code-modal.show {
     display: flex; /* Le modal devient visible */
+    opacity: 1;
 }
 
 /* Contenu de la modale */
@@ -42,6 +46,7 @@
     text-align: center;
     width: 100%;
     animation: fadeInModal 0.5s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Ombre subtile */
 }
 
 /* Animation d'apparition de la modale */
@@ -74,10 +79,12 @@
     font-size: 1.2rem;
     outline: none;
     transition: border-color 0.3s ease;
+    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1); /* Légère ombre interne */
 }
 
 .modal-content input:focus {
     border-color: var(--success-btn-bg);
+    box-shadow: inset 0 0 8px rgba(63, 195, 128, 0.3); /* Ombre interne au focus */
 }
 
 /* Boutons dans la modale */
@@ -95,11 +102,13 @@
     font-size: 1.1rem;
     cursor: pointer;
     border: none;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Ombre légère pour donner de la profondeur */
 }
 
 .modal-buttons button:hover {
     transform: scale(1.05); /* Effet de zoom au survol */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* Ombre plus marquée au survol */
 }
 
 /* Bouton succès */
